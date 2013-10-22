@@ -9,10 +9,12 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="css/bootstrap-theme.css" media="screen">
+    <link rel="stylesheet" href="css/bootstrap-select.css" media="screen">
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/bootstrap.js" type="text/javascript"></script>
     <script src="js/knockout.js" type="text/javascript"></script>
     <script src="js/iefix.js" type="text/javascript"></script>
+    <script src="js/bootstrap-select.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="wrap">
@@ -25,7 +27,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">jsHpFramework</a>
+                <a class="navbar-brand" href="#">ExamPrepper</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -40,15 +42,79 @@
 
         <div class="row row-offcanvas row-offcanvas-right">
             <div class="col-md-12">
-                <div class="row">
-                    <h2>Hallo Welt</h2>
-                    <p>Überall dieselbe alte Leier. Das Layout ist fertig, der Text lässt auf sich warten. Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten meines großen Bruders »Lorem Ipsum«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen lesen. Denn esse est percipi - Sein ist wahrgenommen werden. Und weil Sie nun schon die Güte haben, mich ein paar weitere Sätze lang zu begleiten, möchte ich diese Gelegenheit nutzen, Ihnen nicht nur als Lückenfüller zu dienen, sondern auf etwas hinzuweisen, das es ebenso verdient wahrgenommen zu werden: Webstandards nämlich. Sehen Sie, Webstandards sind das Regelwerk, auf dem Webseiten aufbauen. So gibt es Regeln für HTML, CSS, JavaScript oder auch XML; Worte, die Sie vielleicht schon einmal von Ihrem Entwickler gehört haben.</p>
+                <h2>Hallo Welt</h2>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="inputTitel" class="col-lg-2 control-label">Titel</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="inputTitel" placeholder="Titel">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Decks</label>
+                        <div class="col-lg-10">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">4</span>
+                                    <h4 class="list-group-item-heading">Softwareengineering</h4>
+                                    <p class="list-group-item-text">Alles rund um Software Kees </p>
+                                    <p><span class="label label-success">Informatik</span></p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">33</span>
+                                    <h4 class="list-group-item-heading">Mathematik</h4>
+                                    <p class="list-group-item-text">Mathematik Semester 3 </p>
+                                    <p><span class="label label-primary">Mathematik</span></p>
+                                </a>
+                                <a href="#" class="list-group-item">
+                                    <span class="badge">11</span>
+                                    <h4 class="list-group-item-heading">Datenbanken</h4>
+                                    <p class="list-group-item-text">Semester 3+4 Datenbanken</p>
+                                    <p><span class="label label-success">Informatik</span></p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-remove"></span> Remove Deck</button>
+                                <button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> Add Deck</button>
+                            </div>
+                        </div>
 
-                    <p>Diese Standards sorgen dafür, dass alle Beteiligten aus einer Webseite den größten Nutzen ziehen. Im Gegensatz zu früheren Webseiten müssen wir zum Beispiel nicht mehr zwei verschiedene Webseiten für den Internet Explorer und einen anderen Browser programmieren. Es reicht eine Seite, die - richtig angelegt - sowohl auf verschiedenen Browsern im Netz funktioniert, aber ebenso gut für den Ausdruck oder die Darstellung auf einem Handy geeignet ist. Wohlgemerkt: Eine Seite für alle Formate. Was für eine Erleichterung. Standards sparen Zeit bei den Entwicklungskosten und sorgen dafür, dass sich Webseiten später leichter pflegen lassen. Natürlich nur dann, wenn sich alle an diese Standards halten. Das gilt für Browser wie Firefox, Opera, Safari und den Internet Explorer ebenso wie für die Darstellung in Handys. Und was können Sie für Standards tun?</p>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="inputType" class="col-lg-2 control-label">Type of Study</label>
+                        <div class="col-lg-10">
+                            <select id="inputType" class="form-control" >
+                                <option value="day" selected>Cards per Day</option>
+                                <option value="fix">Fixed Date</option>
+                            </select>
+                            <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                            <script type="text/javascript">
+                                $('#inputType').selectpicker();
+                            </script>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="inputDate" class="col-lg-2 control-label">To Date</label>
+                        <div class="col-lg-10">
+                            <input type="date" class="form-control" id="inputDate" placeholder="Date">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
+                                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
-                    <p>Fordern Sie von Ihren Designern und Programmieren einfach standardkonforme Webseiten. Ihr Budget wird es Ihnen auf Dauer danken. Ebenso möchte ich Ihnen dafür danken, dass Sie mich bin zum Ende gelesen haben. Meine Mission ist erfüllt. Ich werde hier noch die Stellung halten, bis der geplante Text eintrifft. Ich wünsche Ihnen noch einen schönen Tag. Und arbeiten Sie nicht zuviel! Überall dieselbe alte Leier. Das Layout ist fertig, der Text lässt auf sich warten. Damit das Layout nun nicht nackt im Raume steht und sich klein und leer vorkommt, springe ich ein: der Blindtext. Genau zu diesem Zwecke erschaffen, immer im Schatten meines großen Bruders »Lorem Ipsum«, freue ich mich jedes Mal, wenn Sie ein paar Zeilen lesen. Denn esse est percipi - Sein ist wahrgenommen werden.</p>
-
-             </div><!--/row-->
             </div><!--/span-->
             <div class="push"></div>
         </div><!--/row-->
