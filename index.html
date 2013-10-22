@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ExamPrepper</a>
+                <a class="navbar-brand" href="#"><img src="images/logo_text_small.png" alt="ExamPrepper"></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -66,17 +66,17 @@
 		var main_view = $("#main_view");
 		router = new Router(main_view);
 		router.defaultRouter = new RouterItem("/", "pages/view_index.html");
-		router.Add("/study$", "pages/view_studies.html");
-		router.Add("/study/new$", "pages/new_study.html");
-		router.Add("/study/[0-9a-zA-Z]+/edit$", "pages/edit_study.html");
-		router.Add("/study/[0-9a-zA-Z]+/delete$", "pages/delete_study.html");
-		router.Add("/study/[0-9a-zA-Z]+/study/[0-9a-zA-Z]+$", "pages/study_card.html");
-		router.Add("/study/[0-9a-zA-Z]+$", "pages/study.html");
-		router.Add("/deck$", "pages/view_decks.html");
-		router.Add("/deck/new$", "pages/new_deck.html");
-		router.Add("/deck/[0-9a-zA-Z]+/edit$", "pages/edit_deck.html");
-		router.Add("/deck/[0-9a-zA-Z]+/delete$", "pages/delete_deck.html");
-		router.Add("/deck/[0-9a-zA-Z]+/edit/[0-9a-zA-Z]+$", "pages/edit_card.html");
+		router.Add("/study$", "pages/view_studies.html","Studies");
+		router.Add("/study/new$", "pages/new_study.html","New Study");
+		router.Add("/study/[0-9a-zA-Z]+/edit$", "pages/edit_study.html","Edit Study");
+		router.Add("/study/[0-9a-zA-Z]+/delete$", "pages/delete_study.html","Delete Study");
+		router.Add("/study/[0-9a-zA-Z]+/study/[0-9a-zA-Z]+$", "pages/study_card.html", "Study Card");
+		router.Add("/study/[0-9a-zA-Z]+$", "pages/study.html", "Study");
+		router.Add("/deck$", "pages/view_decks.html","Decks");
+		router.Add("/deck/new$", "pages/new_deck.html","New Deck");
+		router.Add("/deck/[0-9a-zA-Z]+/edit$", "pages/edit_deck.html", "Edit Deck");
+		router.Add("/deck/[0-9a-zA-Z]+/delete$", "pages/delete_deck.html","Delete Deck");
+		router.Add("/deck/[0-9a-zA-Z]+/edit/[0-9a-zA-Z]+$", "pages/edit_card.html","Edit Card");
 		
 		// trigger the event on page load
 		$(window).hashchange();
