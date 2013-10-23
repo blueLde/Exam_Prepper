@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="css/bootstrap.css" media="screen">
     <link rel="stylesheet" href="css/bootstrap-theme.css" media="screen">
     <link rel="stylesheet" href="css/bootstrap-select.css" media="screen">
-    <script src="js/jquery.js" type="text/javascript"></script>
-    <script src="js/bootstrap.js" type="text/javascript"></script>
-    <script src="js/knockout.js" type="text/javascript"></script>
-    <script src="js/iefix.js" type="text/javascript"></script>
-    <script src="js/bootstrap-select.js" type="text/javascript"></script>
-	<script src="js/jquery.ba-hashchange.min.js" type="text/javascript"></script>
+    <script src="js/ext/jquery.js" type="text/javascript"></script>
+    <script src="js/ext/bootstrap.js" type="text/javascript"></script>
+    <script src="js/ext/knockout.js" type="text/javascript"></script>
+    <script src="js/ext/iefix.js" type="text/javascript"></script>
+    <script src="js/ext/bootstrap-select.js" type="text/javascript"></script>
+	<script src="js/ext/jquery.hashchange.js" type="text/javascript"></script>
 	<script src="js/router.js" type="text/javascript"></script>
 </head>
 <body>
@@ -35,7 +35,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Home</a></li>
                     <li><a href="#/study">Study</a></li>
 					<li><a href="#/deck">Decks</a></li>
                 </ul>
@@ -45,10 +45,11 @@
     <!--Container -->
     <div class="container" id="main_view">
     </div><!--/.container-->
+    <div class="push"></div> <!-- für Footer wichtig!-->
 </div>
 <footer>
     <hr>
-    <p>&copy; Company 2013</p>
+    <p>&copy; 2013 by ExamPrepper - <a href="/#/terms">Terms of Use</a> - <a href="/#/about">About</a></p>
 </footer>
 <script>
 
@@ -59,24 +60,24 @@
 		if (location.hash.length > 0)
 			hash = location.hash.substring(1, location.hash.length);
 		// routing
-		router.Route(hash);
+		router.route(hash);
 	});
 
 	$(function() {
 		var main_view = $("#main_view");
 		router = new Router(main_view);
 		router.defaultRouter = new RouterItem("/", "pages/view_index.html");
-		router.Add("/study$", "pages/view_studies.html","Studies");
-		router.Add("/study/new$", "pages/new_study.html","New Study");
-		router.Add("/study/[0-9a-zA-Z]+/edit$", "pages/edit_study.html","Edit Study");
-		router.Add("/study/[0-9a-zA-Z]+/delete$", "pages/delete_study.html","Delete Study");
-		router.Add("/study/[0-9a-zA-Z]+/study/[0-9a-zA-Z]+$", "pages/study_card.html", "Study Card");
-		router.Add("/study/[0-9a-zA-Z]+$", "pages/study.html", "Study");
-		router.Add("/deck$", "pages/view_decks.html","Decks");
-		router.Add("/deck/new$", "pages/new_deck.html","New Deck");
-		router.Add("/deck/[0-9a-zA-Z]+/edit$", "pages/edit_deck.html", "Edit Deck");
-		router.Add("/deck/[0-9a-zA-Z]+/delete$", "pages/delete_deck.html","Delete Deck");
-		router.Add("/deck/[0-9a-zA-Z]+/edit/[0-9a-zA-Z]+$", "pages/edit_card.html","Edit Card");
+		router.add("/study$", "pages/view_studies.html","Studies");
+		router.add("/study/new$", "pages/new_study.html","New Study");
+		router.add("/study/[0-9a-zA-Z]+/edit$", "pages/edit_study.html","Edit Study");
+		router.add("/study/[0-9a-zA-Z]+/delete$", "pages/delete_study.html","Delete Study");
+		router.add("/study/[0-9a-zA-Z]+/study/[0-9a-zA-Z]+$", "pages/study_card.html", "Study Card");
+		router.add("/study/[0-9a-zA-Z]+$", "pages/study.html", "Study");
+		router.add("/deck$", "pages/view_decks.html","Decks");
+		router.add("/deck/new$", "pages/new_deck.html","New Deck");
+		router.add("/deck/[0-9a-zA-Z]+/edit$", "pages/edit_deck.html", "Edit Deck");
+		router.add("/deck/[0-9a-zA-Z]+/delete$", "pages/delete_deck.html","Delete Deck");
+		router.add("/deck/[0-9a-zA-Z]+/edit/[0-9a-zA-Z]+$", "pages/edit_card.html","Edit Card");
 		
 		// trigger the event on page load
 		$(window).hashchange();

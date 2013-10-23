@@ -13,30 +13,30 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Decks</label>
                 <div class="col-lg-10">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <span class="badge">4</span>
+                    <ul class="list-group">
+                        <li class="list-group-item">
                             <h4 class="list-group-item-heading">Softwareengineering</h4>
+                            <span class="badge">4</span>
                             <p class="list-group-item-text">Alles rund um Software Kees </p>
                             <p><span class="label label-success">Informatik</span></p>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <span class="badge">33</span>
+                        </li>
+                        <li class="list-group-item">
                             <h4 class="list-group-item-heading">Mathematik</h4>
+                            <span class="badge">33</span>
                             <p class="list-group-item-text">Mathematik Semester 3 </p>
                             <p><span class="label label-primary">Mathematik</span></p>
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <span class="badge">11</span>
+                        </li>
+                        <li class="list-group-item">
                             <h4 class="list-group-item-heading">Datenbanken</h4>
+                            <span class="badge">11</span>
                             <p class="list-group-item-text">Semester 3+4 Datenbanken</p>
                             <p><span class="label label-success">Informatik</span></p>
-                        </a>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-remove"></span> Remove Deck</button>
+                        <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Deck</button>
                         <button type="button" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> Add Deck</button>
                     </div>
                 </div>
@@ -53,14 +53,28 @@
                     <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                     <script type="text/javascript">
                         $('#inputType').selectpicker();
+                        $( "#inputType" ).change(function() {
+                            $("#new_study_select > div").css('display','none');
+                            $("#new_study_"+$("#inputType").val()).css('display','block');
+                        });
                     </script>
                 </div>
             </div>
             <hr>
-            <div class="form-group">
-                <label for="inputDate" class="col-lg-2 control-label">To Date</label>
-                <div class="col-lg-10">
-                    <input type="date" class="form-control" id="inputDate" placeholder="Date">
+            <div class="form-group" id="new_study_select">
+                <div id="new_study_fix" style="display: none">
+                    <label for="inputDate" class="col-lg-2 control-label">To Date</label>
+                    <div class="col-lg-10">
+                        <input type="date" class="form-control" id="inputDate" placeholder="Date">
+                        <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                    </div>
+                </div>
+                <div id="new_study_day">
+                    <label for="inputCount" class="col-lg-2 control-label">Number of Cards</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="inputCount" placeholder="Number">
+                        <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -75,5 +89,4 @@
         </form>
         <!-- content bis hier -->
     </div><!--/span-->
-    <div class="push"></div> <!-- für Footer wichtig!-->
 </div><!--/row-->

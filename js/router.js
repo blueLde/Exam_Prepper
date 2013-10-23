@@ -7,11 +7,11 @@ var Router = (function () {
         this.div_view = div_view;
     }
 
-    Router.prototype.Add = function (pattern, path, title) {
+    Router.prototype.add = function (pattern, path, title) {
         this.routes.push(new RouterItem(pattern, path, title));
     };
 
-    Router.prototype.Route = function(hash) {
+    Router.prototype.route = function(hash) {
         for (i=0; i<this.routes.length; i++)
         {
             routerItem = this.routes[i];
@@ -23,6 +23,19 @@ var Router = (function () {
         }
         this.defaultRouter.Route(this, hash);
     };
+
+    // Loads the content from path with ajax and replaces the html of div_view
+    Router.prototype.loadRoutePage = function(div_view, path)
+    {
+        $.ajax(path)
+            .done(function(data) {
+                div_view.html(data);
+            })
+            .fail(function()
+            {
+                div_view.html("failed to loading: " + path);
+            });
+    }
 
     return Router;
 })();
@@ -41,7 +54,14 @@ var RouterItem = (function () {
 
     RouterItem.prototype.Route = function(router, hash) {
         this.loadRoutePage(router.div_view, this.path);
-        document.title = pagename + " - " + this.title;
+        if (this.title.length > 0)
+        {
+            document.title = pagename + " - " + this.title;
+        }
+        else
+        {
+            document.title = pagename;
+        }
     };
 
     RouterItem.prototype.Test = function(hash) {
