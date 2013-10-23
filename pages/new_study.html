@@ -12,7 +12,7 @@
             <hr>
             <div class="form-group">
                 <label class="col-lg-2 control-label">Decks</label>
-                <div class="col-lg-10">
+                <div class="col-lg-10" id="listDecks">
                     <ul class="list-group">
                         <li class="list-group-item">
                             <h4 class="list-group-item-heading">Softwareengineering</h4>
@@ -34,6 +34,13 @@
                         </li>
                     </ul>
                 </div>
+                <script type="application/javascript">
+                    $('#listDecks li').removeClass('active').click(function()
+                    {
+                        $('#listDecks li').removeClass('active');
+                        $(this).addClass('active');
+                    });
+                </script>
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
                         <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Deck</button>
@@ -65,7 +72,13 @@
                 <div id="new_study_fix" style="display: none">
                     <label for="inputDate" class="col-lg-2 control-label">To Date</label>
                     <div class="col-lg-10">
-                        <input type="date" class="form-control" id="inputDate" placeholder="Date">
+                        <input type="text" class="form-control" id="inputDate" placeholder="Date">
+                        <script type="application/javascript">
+                            $('#inputDate').datepicker({
+                                calendarWeeks: true,
+                                todayHighlight: true
+                            });
+                        </script>
                         <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                     </div>
                 </div>
