@@ -1,1 +1,71 @@
-<h1>view decks</h1>
+<div class="row row-offcanvas row-offcanvas-right">
+    <!-- content von hier -->
+    <div class="col-md-12">
+        <h2>My Decks</h2>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="inputSearch" class="col-lg-2 control-label">Search</label>
+                <div class="col-lg-10 input-group">
+                    <input type="text" class="form-control" id="inputSearch" placeholder="Search">
+                          <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                          </span>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Decks</label>
+                <div class="col-lg-10" id="listDecks">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">Softwareengineering</h4>
+                            <span class="badge">4</span>
+                            <p class="list-group-item-text">Alles rund um Software Kees </p>
+                            <p><span class="label label-success">Informatik</span></p>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">Mathematik</h4>
+                            <span class="badge">33</span>
+                            <p class="list-group-item-text">Mathematik Semester 3 </p>
+                            <p><span class="label label-primary">Mathematik</span></p>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">Datenbanken</h4>
+                            <span class="badge">11</span>
+                            <p class="list-group-item-text">Semester 3+4 Datenbanken</p>
+                            <p><span class="label label-success">Informatik</span></p>
+                        </li>
+                    </ul>
+                </div>
+                <script type="application/javascript">
+                    $('#listDecks li').removeClass('active').click(function()
+                    {
+                        $('#listDecks li').removeClass('active');
+                        $(this).addClass('active');
+                    });
+                </script>
+                <div class="col-lg-offset-2 col-lg-10">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Deck</button>
+                        <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit Deck</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-success" id="buttonNew"><span class="glyphicon glyphicon-plus"></span> Add new Deck </button>
+                        <script type="application/javascript">
+                            $('#buttonNew').click(function()
+                            {
+                                router.go('/deck/new');
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- content bis hier -->
+    </div><!--/span-->
+</div><!--/row-->

@@ -20,6 +20,7 @@
                             <p><span class="label label-success">Informatik</span> <span class="label label-primary">Mathematik</span></p>
                         </li>
                     </ul>
+                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
                 </div>
                 <script type="application/javascript">
                     $('#listStudies li').removeClass('active').click(function()
@@ -39,7 +40,13 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add new Study </button>
+                        <button type="button" class="btn btn-success" id="buttonNew"><span class="glyphicon glyphicon-plus"></span> Add new Study </button>
+                        <script type="application/javascript">
+                            $('#buttonNew').click(function()
+                            {
+                                router.go('/study/new');
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

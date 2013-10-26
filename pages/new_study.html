@@ -7,6 +7,7 @@
                 <label for="inputTitel" class="col-lg-2 control-label">Titel</label>
                 <div class="col-lg-10">
                     <input type="text" class="form-control" id="inputTitel" placeholder="Titel">
+                    <span class="help-block">The title of the Study.</span>
                 </div>
             </div>
             <hr>
@@ -57,7 +58,7 @@
                         <option value="day" selected>Cards per Day</option>
                         <option value="fix">Fixed Date</option>
                     </select>
-                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                    <span class="help-block">The type of the lerningmethode.</span>
                     <script type="text/javascript">
                         $('#inputType').selectpicker();
                         $( "#inputType" ).change(function() {
@@ -79,14 +80,14 @@
                                 todayHighlight: true
                             });
                         </script>
-                        <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                        <span class="help-block">The date of the day unti the Deck should be learned.</span>
                     </div>
                 </div>
                 <div id="new_study_day">
                     <label for="inputCount" class="col-lg-2 control-label">Number of Cards</label>
                     <div class="col-lg-10">
                         <input type="text" class="form-control" id="inputCount" placeholder="Number">
-                        <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                        <span class="help-block">The Number of Cards which should be learned per day.</span>
                     </div>
                 </div>
             </div>
@@ -95,7 +96,7 @@
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
                         <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
-                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Add</button>
+                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
                     </div>
                 </div>
             </div>
