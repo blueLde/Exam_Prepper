@@ -1,4 +1,7 @@
-// Class that represents the App.
+//********************************//
+// Map implementation             //
+// Copyright Joshua Schnabel 2013 //
+//********************************//
 var MyMap = (function () {
 
     var obj;

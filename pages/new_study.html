@@ -73,12 +73,22 @@
                 <div id="new_study_fix" style="display: none">
                     <label for="inputDate" class="col-lg-2 control-label">To Date</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="inputDate" placeholder="Date">
+                        <input type="text" class="form-control" id="inputDate" placeholder="Date" onclick="hideKeyboard($(this))">
                         <script type="application/javascript">
                             $('#inputDate').datepicker({
                                 calendarWeeks: true,
-                                todayHighlight: true
+                                todayHighlight: true,
+                                format: 'dd.mm.yyyy'
                             });
+                            function hideKeyboard(element) {
+                                element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+                                element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+                                setTimeout(function() {
+                                    element.blur();
+                                    element.removeAttr('readonly');
+                                    element.removeAttr('disabled');
+                                }, 100);
+                            }
                         </script>
                         <span class="help-block">The date of the day unti the Deck should be learned.</span>
                     </div>

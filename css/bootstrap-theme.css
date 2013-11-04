@@ -39,7 +39,22 @@ a, a:visited, a:hover, a:focus{
     font-size: 11px;
     font-family: Arial, sans-serif;
 }
-
+body.modal-open,
+.modal-open .navbar-fixed-top,
+.modal-open .navbar-fixed-bottom {
+    margin-right: 0px;
+}
+#loading
+{
+    width: 150px;
+    hight: 150px;
+    margin: auto;
+    text-align: center;
+}
+#loading .text
+{
+    text-align: center;
+}
 /* Farben */
 
 hr

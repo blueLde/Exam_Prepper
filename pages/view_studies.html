@@ -7,7 +7,7 @@
                 <label class="col-lg-2 control-label">Studies</label>
                 <div class="col-lg-10" id="listStudies">
                     <ul class="list-group">
-                        <li  class="list-group-item active">
+                        <li  class="list-group-item">
                             <h4 class="list-group-item-heading">Semester 1</h4>
                             <span class="badge">88% done</span>
                             <p class="list-group-item-text">5 Cards per Day</p>
@@ -20,20 +20,56 @@
                             <p><span class="label label-success">Informatik</span> <span class="label label-primary">Mathematik</span></p>
                         </li>
                     </ul>
-                    <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                    <span class="help-block hidden-xs">Start Study by clicking on the Study, doubleclicking to select on.</span>
+                    <span class="help-block visible-xs">Start Study by clicking on the Study, hold it for menu.</span>
                 </div>
                 <script type="application/javascript">
-                    $('#listStudies li').removeClass('active').click(function()
+                    edit = function()
                     {
-                        $('#listStudies li').removeClass('active');
-                        $(this).addClass('active');
-                    });
+                        app.router.go("/study/1aZ/edit");
+                    };
+                    remove = function()
+                    {
+                        app.messages.info('Study has been deleted','Deleted',function(){});
+                    };
+                    function handleHammer(ev) {
+                        ev.gesture.preventDefault();
+                        switch(ev.type) {
+                            case 'hold':
+                                arr = Array();
+                                arr[0] = app.menu.createEntry('edit',edit);
+                                arr[1] = app.menu.createEntry('delete',remove);
+                                app.menu.show(arr);
+                                break;
+                        }
+                    }
+
+                    var hammertime = $("#listStudies").hammer();
+                    $("#listStudies li").on("hold", handleHammer);
+
+                    dbc = new MyDBClick(function()
+                    {
+                        app.router.go("/study/1aZ");
+                    },function(e){
+                        $("#listStudies li").removeClass('active');
+                        $(e.target).closest("#listStudies li").addClass('active').end().children().blur().end().focus();
+                        if (window.getSelection)
+                            window.getSelection().removeAllRanges();
+                        else if (document.selection)
+                            document.selection.empty();
+                    },300);
+                    dbc.setObject($("#listStudies li"));
+
                 </script>
                 <div class="col-lg-offset-2 col-lg-10">
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Study</button>
-                        <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit Study</button>
+                    <div class="pull-right hidden-xs">
+                        <button type="button" class="btn btn-sm btn-danger" id="buttonRemove"><span class="glyphicon glyphicon-minus"></span> Remove Study</button>
+                        <button type="button" class="btn btn-sm btn-warning" id="buttonEdit"><span class="glyphicon glyphicon-pencil"></span> Edit Study</button>
                     </div>
+                    <script type="application/javascript">
+                        $("#buttonEdit").click(edit);
+                        $("#buttonRemove").click(remove);
+                    </script>
                 </div>
             </div>
             <hr>
@@ -44,7 +80,7 @@
                         <script type="application/javascript">
                             $('#buttonNew').click(function()
                             {
-                                router.go('/study/new');
+                                app.router.go('/study/new');
                             });
                         </script>
                     </div>

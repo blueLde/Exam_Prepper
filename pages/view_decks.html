@@ -8,7 +8,7 @@
                 <div class="col-lg-10 input-group">
                     <input type="text" class="form-control" id="inputSearch" placeholder="Search">
                           <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                <button class="btn btn-success" type="button"><span class="glyphicon glyphicon-search"></span></button>
                           </span>
                 </div>
             </div>
@@ -38,17 +38,52 @@
                     </ul>
                 </div>
                 <script type="application/javascript">
-                    $('#listDecks li').removeClass('active').click(function()
+                    edit = function()
                     {
-                        $('#listDecks li').removeClass('active');
-                        $(this).addClass('active');
-                    });
+                        app.router.go("/deck/1aZ/edit");
+                    };
+                    remove = function()
+                    {
+                        app.messages.info('Deck has been deleted','Deleted',function(){});
+                    };
+                    function handleHammer(ev) {
+                        ev.gesture.preventDefault();
+                        switch(ev.type) {
+                            case 'hold':
+                                arr = Array();
+                                arr[0] = app.menu.createEntry('edit',edit);
+                                arr[1] = app.menu.createEntry('delete',remove);
+                                app.menu.show(arr);
+                                break;
+                        }
+                    }
+
+                    var hammertime = $("#listDecks").hammer();
+                    $("#listDecks li").on("hold", handleHammer);
+
+                    dbc = new MyDBClick(function()
+                    {
+                        app.router.go("/deck/1aZ");
+                    },function(e){
+                        $("#listDecks li").removeClass('active');
+                        $(e.target).closest("#listDecks li").addClass('active').end().children().blur().end().focus();
+                        if (window.getSelection)
+                            window.getSelection().removeAllRanges();
+                        else if (document.selection)
+                            document.selection.empty();
+                    },300);
+                    dbc.setObject($("#listDecks li"));
+
                 </script>
                 <div class="col-lg-offset-2 col-lg-10">
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Deck</button>
-                        <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit Deck</button>
+                    <div class="pull-right hidden-xs">
+                        <button type="button" class="btn btn-sm btn-danger" id="buttonRemove"><span class="glyphicon glyphicon-minus"></span> Remove Deck</button>
+                        <button type="button" class="btn btn-sm btn-warning" id="buttonEdit"><span class="glyphicon glyphicon-pencil"></span> Edit Deck</button>
                     </div>
+                    <script type="application/javascript">
+                        $("#buttonEdit").click(edit);
+                        $("#buttonRemove").click(remove);
+                    </script>
                 </div>
             </div>
             <hr>
@@ -59,7 +94,7 @@
                         <script type="application/javascript">
                             $('#buttonNew').click(function()
                             {
-                                router.go('/deck/new');
+                                app.router.go('/deck/new');
                             });
                         </script>
                     </div>

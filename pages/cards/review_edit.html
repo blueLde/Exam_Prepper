@@ -1,12 +1,12 @@
 <div class="row row-offcanvas row-offcanvas-right">
     <!-- content von hier -->
     <div class="col-md-12">
-        <h2>New Deck</h2>
+        <h2>New Reviewcard</h2>
         <form class="form-horizontal" role="form">
             <div class="form-group">
                 <label for="inputTitel" class="col-lg-2 control-label">Titel</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputTitel" placeholder="Titel">
+                    <input type="text" class="form-control" id="inputTitel" placeholder="Titel" readonly>
                     <span class="help-block">The Title of the Deck.</span>
                 </div>
             </div>
@@ -60,10 +60,9 @@
                         <option value="multi">Multiple Choice Card</option>
                     </select>
                     <span class="help-block">The type of the card which will be added.</span>
-                    <button type="button" class="btn btn-sm btn-success pull-right" id="buttonAddCard"><span class="glyphicon glyphicon-plus"></span> Add Card</button>
+                    <button type="button" class="btn btn-sm btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Add Card</button>
                     <script type="text/javascript">
                         $('#inputAdd').selectpicker();
-                        $('#buttonAddCard').click(function(){app.router.go("/deck/"+router.getVariable("deckid")+"/add/reviewcard")});
                     </script>
                 </div>
             </div>

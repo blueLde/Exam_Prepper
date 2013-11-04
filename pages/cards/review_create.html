@@ -1,0 +1,45 @@
+<div class="row row-offcanvas row-offcanvas-right">
+    <!-- content von hier -->
+    <div class="col-md-12">
+        <h2>New Reviewcard</h2>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="inputQuestion" class="col-lg-2 control-label">Question</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="inputQuestion" placeholder="Titel">
+                    <span class="help-block">The Question</span>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="inputAnswer" class="col-lg-2 control-label">Answer</label>
+                <div class="col-lg-10">
+                    <textarea class="form-control" rows="6" id="inputAnswer"></textarea>
+                    <span class="help-block">The Answer of the Question.</span>
+                    <script type="application/javascript">
+                        $('#inputAnswer').wysihtml5({
+                            "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+                            "emphasis": true, //Italics, bold, etc. Default true
+                            "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                            "html": false, //Button which allows you to edit the generated HTML. Default false
+                            "link": true, //Button to insert a link. Default true
+                            "image": false, //Button to insert an image. Default true,
+                            "color": false, //Button to change color of font
+                            "size": 'sm'
+                        });
+                    </script>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
+                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- content bis hier -->
+    </div><!--/span-->
+</div><!--/row-->

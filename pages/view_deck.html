@@ -1,0 +1,40 @@
+<div class="row row-offcanvas row-offcanvas-right">
+    <!-- content von hier -->
+    <div class="col-md-12">
+        <h2>Deck XYZ</h2>
+        <p>
+            The Description of the Deck
+        </p>
+        <hr>
+        <h4>Cards</h4>
+        <div id="listCards">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">What does lol mean?</h4>
+                    <p class="list-group-item-text">Laughing Out Loud</p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">What does rofl mean?</h4>
+                    <p class="list-group-item-text">Rolling on Floor Laughing </p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">Say a other Word for Hi!</h4>
+                    <p class="list-group-item-text">Hey</p>
+                </li>
+            </ul>
+        </div>
+        <hr>
+        <div class="pull-right">
+            <button type="button" class="btn btn-sm btn-danger" id="buttonRemove"><span class="glyphicon glyphicon-minus"></span> Remove Deck</button>
+            <button type="button" class="btn btn-sm btn-warning" id="buttonEdit"><span class="glyphicon glyphicon-pencil"></span> Edit Deck</button>
+        </div>
+        <script type="application/javascript">
+            $('#listCards li').removeClass('active').click(function()
+            {
+                $('#listCards li').removeClass('active');
+                $(this).addClass('active');
+            });
+        </script>
+        <!-- content bis hier -->
+    </div><!--/span-->
+</div><!--/row-->
