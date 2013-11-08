@@ -36,24 +36,26 @@
                             <p><span class="label label-success">Informatik</span></p>
                         </li>
                     </ul>
+                    <span class="help-block hidden-xs">View Deck by clicking on the Deck, doubleclicking to select on.</span>
+                    <span class="help-block visible-xs">View Deck by clicking on the Deck, hold it for menu.</span>
                 </div>
                 <script type="application/javascript">
                     edit = function()
                     {
-                        app.router.go("/deck/1aZ/edit");
+                        $a.router.go("/deck/1aZ/edit");
                     };
                     remove = function()
                     {
-                        app.messages.info('Deck has been deleted','Deleted',function(){});
+                        $a.messages.info('Deck has been deleted','Deleted',function(){});
                     };
                     function handleHammer(ev) {
                         ev.gesture.preventDefault();
                         switch(ev.type) {
                             case 'hold':
                                 arr = Array();
-                                arr[0] = app.menu.createEntry('edit',edit);
-                                arr[1] = app.menu.createEntry('delete',remove);
-                                app.menu.show(arr);
+                                arr[0] = $a.menu.createEntry('edit',edit);
+                                arr[1] = $a.menu.createEntry('delete',remove);
+                                $a.menu.show(arr);
                                 break;
                         }
                     }
@@ -63,7 +65,7 @@
 
                     dbc = new MyDBClick(function()
                     {
-                        app.router.go("/deck/1aZ");
+                        $a.router.go("/deck/1aZ");
                     },function(e){
                         $("#listDecks li").removeClass('active');
                         $(e.target).closest("#listDecks li").addClass('active').end().children().blur().end().focus();
@@ -94,7 +96,7 @@
                         <script type="application/javascript">
                             $('#buttonNew').click(function()
                             {
-                                app.router.go('/deck/new');
+                                $a.router.go('/deck/new');
                             });
                         </script>
                     </div>
