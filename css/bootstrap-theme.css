@@ -156,12 +156,17 @@ li.list-group-item:hover, li.list-group-item:focus
 {
     margin-top: 30px;
 }
-#frontText p img
+#frontText p
+{
+    min-height: 68px;
+}
+#frontText i
 {
     float: right;
-    margin: 8px;
-    width: 96px;
-    height: 96px;
+    font-size: 64px;
+    color: #DDDDDD;
+    text-shadow: 4px 4px 8px #525252, 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    margin: 10px;
 }
 /*///////////////////////////////*/
 

@@ -26,10 +26,6 @@ var App = (function () {
             div_view = div;
         }
 
-        Router.prototype.getDiv = function () {
-            return div_view;
-        };
-
         Router.prototype.getPageName = function () {
             return pagename;
         };
@@ -50,37 +46,6 @@ var App = (function () {
         Router.prototype.addDefaultRouter = function (pattern, path, title) {
             defaultRouter  = new RouterItem(pattern, path, title);
         };
-
-        // Class that represents a single route.
-        var RouterItem = (function () {
-
-            function RouterItem(pattern, path, title) {
-                this.patternRegEx = new RegExp("^"+pattern.replace(/:(\w+):/g,"(\\w+)")+"$");
-                this.pat = "^"+pattern.replace(/:(\w+):/g,"(\\w+)")+"$";
-                var tempValues = pattern.match(/:(\w+):/g);
-                this.values = (tempValues == undefined) ? Array() : tempValues;
-                for (i=0; i< this.values.length; i++) this.values[i] = this.values[i].replace(/:/g,"");
-                this.path = path;
-                this.title = (title == undefined) ? "" : title;
-            }
-
-            RouterItem.prototype.route = function(router, hash) {
-                var tempArray = this.patternRegEx.exec(hash);
-                tempArray = (tempArray == undefined) ? Array() : tempArray;
-                var myMap = new MyMap();
-                for (i=1; i< tempArray.length; i++) myMap.set(this.values[i-1], tempArray[i]);
-                router.setVariables(myMap);
-                document.title = router.getPageName()
-                if (this.title.length > 0) document.title +=  " - " + this.title;
-                router.loadRoutePage(this.path);
-            };
-
-            RouterItem.prototype.test = function(hash) {
-                return this.patternRegEx.test(hash);
-            };
-
-            return RouterItem;
-        })();
 
         Router.prototype.add = function (pattern, path, title) {
             routes.push(new RouterItem(pattern, path, title));
@@ -125,6 +90,36 @@ var App = (function () {
                 });
         }
 
+        // Class that represents a single route.
+        var RouterItem = (function () {
+
+            function RouterItem(pattern, path, title) {
+                this.patternRegEx = new RegExp("^"+pattern.replace(/:(\w+):/g,"(\\w+)")+"$");
+                this.pat = "^"+pattern.replace(/:(\w+):/g,"(\\w+)")+"$";
+                var tempValues = pattern.match(/:(\w+):/g);
+                this.values = (tempValues == undefined) ? Array() : tempValues;
+                for (i=0; i< this.values.length; i++) this.values[i] = this.values[i].replace(/:/g,"");
+                this.path = path;
+                this.title = (title == undefined) ? "" : title;
+            }
+
+            RouterItem.prototype.route = function(router, hash) {
+                var tempArray = this.patternRegEx.exec(hash);
+                tempArray = (tempArray == undefined) ? Array() : tempArray;
+                var myMap = new MyMap();
+                for (i=1; i< tempArray.length; i++) myMap.set(this.values[i-1], tempArray[i]);
+                router.setVariables(myMap);
+                document.title = router.getPageName()
+                if (this.title.length > 0) document.title +=  " - " + this.title;
+                router.loadRoutePage(this.path);
+            };
+
+            RouterItem.prototype.test = function(hash) {
+                return this.patternRegEx.test(hash);
+            };
+
+            return RouterItem;
+        })();
 
         return Router;
     })();
@@ -302,7 +297,7 @@ var App = (function () {
 
         Logger.prototype.log = function(msg)
         {
-           if(d) console.log(msg);
+            if(d) console.log(msg);
         };
         return Logger;
     })();
