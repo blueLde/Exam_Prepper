@@ -22,15 +22,23 @@
 		<h1>Demo</h1>
         <h3>Observables</h3>
         <pre>The name is &#60;span data-bind="text: personName"&#62;&#60;/span&#62;</pre>
-		The name is <span data-bind="text: personNameA"></span><br>
+        <pre>
+var myViewModel = {
+			personName: ko.observable('Lala'),
+			personAge: ko.observable(1232)
+		};
+		ko.applyBindings(myViewModel);
+		$('#b1').click(function(){myViewModel.personName('Mary');});
+        </pre>
+		The name is <span data-bind="text: personName"></span><br>
 		<button id="b1">Mary</button>
 		<script>
-		var myViewModel2 = {
-			personNameA: ko.observable('Lala'),
-			personAgeA: ko.observable(1232)
+		var myViewModel = {
+			personName: ko.observable('Lala'),
+			personAge: ko.observable(1232)
 		};
-		ko.applyBindings(myViewModel2);
-		$('#b1').click(function(){myViewModel2.personNameA('Mary');});
+		ko.applyBindings(myViewModel);
+		$('#b1').click(function(){myViewModel.personName('Mary');});
 		</script>		
     </div><!--/.container-->
 </div>
