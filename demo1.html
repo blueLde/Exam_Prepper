@@ -19,14 +19,17 @@
     <!--Container -->
     <div class="container" id="main_view">
 		<h1>Demo</h1>
-		<h3>ViewModel</h3>
-		<pre>
-var myViewModel = {
-	personName: 'Bob',
-	personAge: 123
-};
-ko.applyBindings(myViewModel);</pre>
-		<pre>The name is &#60;span data-bind="text: personName"&#62;&#60;/span&#62;</pre>
+        <pre>The name is &#60;span data-bind="text: personName"&#62;&#60;/span&#62;</pre>
+		The name is <span data-bind="text: personNameA"></span><br>
+		<button id="b1">Mary</button>
+		<script>
+		var myViewModel2 = {
+			personNameA: ko.observable('Lala'),
+			personAgeA: ko.observable(1232)
+		};
+		ko.applyBindings(myViewModel2);
+		$('#b1').click(function(){myViewModel2.personNameA('Mary');});
+		</script>		
     </div><!--/.container-->
 </div>
 </body>
