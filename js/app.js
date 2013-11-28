@@ -173,7 +173,9 @@ var App = (function () {
                 }
                 else
                 {
+                    $a.controller.unset();
                     $a.router.route();
+                    $a.controller.set(controller);
                 }
             });
             functs = functions;
@@ -270,7 +272,9 @@ var App = (function () {
 
         Hashchange.prototype.defaultEvent = function()
         {
+            $a.controller.unset();
             $a.router.route();
+            $a.controller.set(controller);
         };
 
         Hashchange.prototype.execute = function()
@@ -285,6 +289,32 @@ var App = (function () {
     })();
 
     App.prototype.hashchange = new Hashchange();
+
+    var Controller = (function () {
+
+        var controller = null;
+
+        function Controller()
+        {
+
+        }
+
+        Controller.prototype.set = function(cont)
+        {
+            controller = cont;
+            controller.onLoad();
+        };
+
+        Controller.prototype.unset = function()
+        {
+            controller.onUnload();
+            controller = null;
+        };
+
+        return Controller;
+    })();
+
+    App.prototype.controller = new Controller();
 
     var Logger = (function () {
 
