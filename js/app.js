@@ -80,7 +80,8 @@ var App = (function () {
                 url: path,
                 type: "GET",
                 dataType: "html",
-                timeout: 3000
+                timeout: 3000,
+                async: false
             }).done(function(data) {
                     div_view.fadeOut(200,function(){div_view.html(data).fadeIn(200)});
                 })
@@ -175,7 +176,6 @@ var App = (function () {
                 {
                     $a.controller.unset();
                     $a.router.route();
-                    $a.controller.set(controller);
                 }
             });
             functs = functions;
@@ -274,7 +274,6 @@ var App = (function () {
         {
             $a.controller.unset();
             $a.router.route();
-            $a.controller.set(controller);
         };
 
         Hashchange.prototype.execute = function()
@@ -301,13 +300,13 @@ var App = (function () {
 
         Controller.prototype.set = function(cont)
         {
-            controller = cont;
+            controller = cont
             controller.onLoad();
         };
 
         Controller.prototype.unset = function()
         {
-            controller.onUnload();
+            if (controller != null) controller.onUnload();
             controller = null;
         };
 

@@ -106,3 +106,18 @@
         <!-- content bis hier -->
     </div><!--/span-->
 </div><!--/row-->
+<script>
+    var controller = function()
+    {
+        this.onLoad = function()
+        {
+            alert('loaded');
+        }
+
+        this.onUnload = function()
+        {
+            alert('unloaded');
+        }
+    }
+    $a.controller.set(new controller());
+</script>
