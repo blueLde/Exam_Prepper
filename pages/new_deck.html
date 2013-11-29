@@ -61,10 +61,6 @@
                     </select>
                     <span class="help-block">The type of the card which will be added.</span>
                     <button type="button" class="btn btn-sm btn-success pull-right" id="buttonAddCard"><span class="glyphicon glyphicon-plus"></span> Add Card</button>
-                    <script type="text/javascript">
-                        $('#inputAdd').selectpicker();
-                        $('#buttonAddCard').click(function(){$a.router.go("/deck/"+router.getVariable("deckid")+"/add/reviewcard")});
-                    </script>
                 </div>
             </div>
             <hr>
@@ -80,3 +76,19 @@
         <!-- content bis hier -->
     </div><!--/span-->
 </div><!--/row-->
+<script>
+    var controller = function()
+    {
+        this.onLoad = function()
+        {
+            $('#inputAdd').selectpicker();
+            $('#buttonAddCard').click(function(){$a.router.go("/deck/"+router.getVariable("deckid")+"/add/reviewcard")});
+        }
+
+        this.onUnload = function()
+        {
+
+        }
+    }
+    $a.controller.set(new controller());
+</script>

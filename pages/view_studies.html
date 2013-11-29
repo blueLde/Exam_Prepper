@@ -23,53 +23,11 @@
                     <span class="help-block hidden-xs">Start Study by clicking on the Study, doubleclicking to select on.</span>
                     <span class="help-block visible-xs">Start Study by clicking on the Study, hold it for menu.</span>
                 </div>
-                <script type="application/javascript">
-                    edit = function()
-                    {
-                        $a.router.go("/study/1aZ/edit");
-                    };
-                    remove = function()
-                    {
-                        $a.messages.info('Study has been deleted','Deleted',function(){});
-                    };
-                    function handleHammer(ev) {
-                        ev.gesture.preventDefault();
-                        switch(ev.type) {
-                            case 'hold':
-                                arr = Array();
-                                arr[0] = $a.menu.createEntry('edit',edit);
-                                arr[1] = $a.menu.createEntry('delete',remove);
-                                $a.menu.show(arr);
-                                break;
-                        }
-                    }
-
-                    var hammertime = $("#listStudies").hammer();
-                    $("#listStudies li").on("hold", handleHammer);
-
-                    dbc = new MyDBClick(function()
-                    {
-                        $a.router.go("/study/1aZ");
-                    },function(e){
-                        $("#listStudies li").removeClass('active');
-                        $(e.target).closest("#listStudies li").addClass('active').end().children().blur().end().focus();
-                        if (window.getSelection)
-                            window.getSelection().removeAllRanges();
-                        else if (document.selection)
-                            document.selection.empty();
-                    },300);
-                    dbc.setObject($("#listStudies li"));
-
-                </script>
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right hidden-xs">
                         <button type="button" class="btn btn-sm btn-danger" id="buttonRemove"><span class="glyphicon glyphicon-minus"></span> Remove Study</button>
                         <button type="button" class="btn btn-sm btn-warning" id="buttonEdit"><span class="glyphicon glyphicon-pencil"></span> Edit Study</button>
                     </div>
-                    <script type="application/javascript">
-                        $("#buttonEdit").click(edit);
-                        $("#buttonRemove").click(remove);
-                    </script>
                 </div>
             </div>
             <hr>
@@ -77,12 +35,6 @@
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
                         <button type="button" class="btn btn-success" id="buttonNew"><span class="glyphicon glyphicon-plus"></span> Add new Study </button>
-                        <script type="application/javascript">
-                            $('#buttonNew').click(function()
-                            {
-                                $a.router.go('/study/new');
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
@@ -90,3 +42,62 @@
         <!-- content bis hier -->
     </div><!--/span-->
 </div><!--/row-->
+<script>
+    var controller = function()
+    {
+        edit = function()
+        {
+            $a.router.go("/study/1aZ/edit");
+        };
+        remove = function()
+        {
+            $a.messages.info('Study has been deleted','Deleted',function(){});
+        };
+
+        this.onLoad = function()
+        {
+            $('#buttonNew').click(function()
+            {
+                $a.router.go('/study/new');
+            });
+
+            handleHammer = function(ev) {
+                ev.gesture.preventDefault();
+                switch(ev.type) {
+                    case 'hold':
+                        arr = Array();
+                        arr[0] = $a.menu.createEntry('edit',edit);
+                        arr[1] = $a.menu.createEntry('delete',remove);
+                        $a.menu.show(arr);
+                        break;
+                }
+            }
+
+            $("#listStudies").hammer();
+            $("#listStudies li").on("hold", handleHammer);
+
+            dbc = new MyDBClick(function()
+            {
+                $a.router.go("/study/1aZ");
+            },function(e){
+                $("#listStudies li").removeClass('active');
+                $(e.target).closest("#listStudies li").addClass('active').end().children().blur().end().focus();
+                if (window.getSelection)
+                    window.getSelection().removeAllRanges();
+                else if (document.selection)
+                    document.selection.empty();
+            },300);
+            dbc.setObject($("#listStudies li"));
+            $('#buttonNew').click(function()
+            {
+                $a.router.go('/study/new');
+            });
+        }
+
+        this.onUnload = function()
+        {
+
+        }
+    }
+    $a.controller.set(new controller());
+</script>

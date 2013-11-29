@@ -17,12 +17,6 @@
                     Nennen sie drei Begrüßungen.
                 </p>
                 <button type="button" class="btn btn-primary pull-right" id="buttonShowAnswer"><span class="glyphicon glyphicon-eye-open"></span> Show Answer</button>
-                <script type="application/javascript">
-                    $('#buttonShowAnswer').click(function(){
-                        $('#question').css("display","none");
-                        $('#answer').css("display","block");
-                    });
-                </script>
             </div>
             <div id="answer" style="display: none">
                 <h4>Answer</h4>
@@ -42,3 +36,21 @@
         <!-- content bis hier -->
     </div><!--/span-->
 </div><!--/row-->
+<script>
+    var controller = function()
+    {
+        this.onLoad = function()
+        {
+            $('#buttonShowAnswer').click(function(){
+                $('#question').css("display","none");
+                $('#answer').css("display","block");
+            });
+        }
+
+        this.onUnload = function()
+        {
+
+        }
+    }
+    $a.controller.set(new controller());
+</script>

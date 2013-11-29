@@ -39,53 +39,11 @@
                     <span class="help-block hidden-xs">View Deck by clicking on the Deck, doubleclicking to select on.</span>
                     <span class="help-block visible-xs">View Deck by clicking on the Deck, hold it for menu.</span>
                 </div>
-                <script type="application/javascript">
-                    edit = function()
-                    {
-                        $a.router.go("/deck/1aZ/edit");
-                    };
-                    remove = function()
-                    {
-                        $a.messages.info('Deck has been deleted','Deleted',function(){});
-                    };
-                    function handleHammer(ev) {
-                        ev.gesture.preventDefault();
-                        switch(ev.type) {
-                            case 'hold':
-                                arr = Array();
-                                arr[0] = $a.menu.createEntry('edit',edit);
-                                arr[1] = $a.menu.createEntry('delete',remove);
-                                $a.menu.show(arr);
-                                break;
-                        }
-                    }
-
-                    var hammertime = $("#listDecks").hammer();
-                    $("#listDecks li").on("hold", handleHammer);
-
-                    dbc = new MyDBClick(function()
-                    {
-                        $a.router.go("/deck/1aZ");
-                    },function(e){
-                        $("#listDecks li").removeClass('active');
-                        $(e.target).closest("#listDecks li").addClass('active').end().children().blur().end().focus();
-                        if (window.getSelection)
-                            window.getSelection().removeAllRanges();
-                        else if (document.selection)
-                            document.selection.empty();
-                    },300);
-                    dbc.setObject($("#listDecks li"));
-
-                </script>
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right hidden-xs">
                         <button type="button" class="btn btn-sm btn-danger" id="buttonRemove"><span class="glyphicon glyphicon-minus"></span> Remove Deck</button>
                         <button type="button" class="btn btn-sm btn-warning" id="buttonEdit"><span class="glyphicon glyphicon-pencil"></span> Edit Deck</button>
                     </div>
-                    <script type="application/javascript">
-                        $("#buttonEdit").click(edit);
-                        $("#buttonRemove").click(remove);
-                    </script>
                 </div>
             </div>
             <hr>
@@ -93,12 +51,6 @@
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
                         <button type="button" class="btn btn-success" id="buttonNew"><span class="glyphicon glyphicon-plus"></span> Add new Deck </button>
-                        <script type="application/javascript">
-                            $('#buttonNew').click(function()
-                            {
-                                $a.router.go('/deck/new');
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
@@ -109,15 +61,58 @@
 <script>
     var controller = function()
     {
+
+        var edit = function()
+        {
+            $a.router.go("/deck/1aZ/edit");
+        };
+
+        var remove = function()
+        {
+            $a.messages.info('Deck has been deleted','Deleted',function(){});
+        };
+
         this.onLoad = function()
         {
-            alert('loaded');
+            $('#buttonNew').click(function()
+            {
+                $a.router.go('/deck/new');
+            });
+            $("#buttonEdit").click(this.edit);
+            $("#buttonRemove").click(this.remove);
+            $("#listDecks").hammer();
+            var f = function(ev) {
+                ev.gesture.preventDefault();
+                switch(ev.type) {
+                    case 'hold':
+                        arr = Array();
+                        arr[0] = $a.menu.createEntry('edit',edit);
+                        arr[1] = $a.menu.createEntry('delete',remove);
+                        $a.menu.show(arr);
+                        break;
+                }
+            }
+            $("#listDecks li").on("hold",f);
+            dbc = new MyDBClick(
+                    function()
+                    {
+                        $a.router.go("/deck/1aZ");
+                    },function(e){
+                        $("#listDecks li").removeClass('active');
+                        $(e.target).closest("#listDecks li").addClass('active').end().children().blur().end().focus();
+                        if (window.getSelection)
+                            window.getSelection().removeAllRanges();
+                        else if (document.selection)
+                            document.selection.empty();
+                    },300);
+            dbc.setObject($("#listDecks li"));
         }
 
         this.onUnload = function()
         {
-            alert('unloaded');
+
         }
+
     }
     $a.controller.set(new controller());
 </script>
