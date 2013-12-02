@@ -18,8 +18,8 @@ Feature: Manage Study (CRUD)
 	Scenario: Update Study
 		Given a selected study
 		When the user hit the button 'Edit Study'
-		Then the deck will be openend
-		And the user can update the deck
+		Then the study will be opened
+		And the user can update the study
 	
 	Scenario: Delete Study
 		Given a selected study
