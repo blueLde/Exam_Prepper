@@ -6,7 +6,7 @@
             <div class="form-group">
                 <label for="inputTitel" class="col-lg-2 control-label">Titel</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputTitel" placeholder="Titel">
+                    <input type="text" class="form-control" id="inputTitel" placeholder="Title" data-bind="value: title">
                     <span class="help-block">The Title of the Deck.</span>
                 </div>
             </div>
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="inputDescription" class="col-lg-2 control-label">Description</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputDescription" placeholder="Description">
+                    <input type="text" class="form-control" id="inputDescription" placeholder="Desciption" data-bind="value: desciption">
                     <span class="help-block">The Description of the Deck.</span>
                 </div>
             </div>
@@ -22,28 +22,13 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Cards</label>
                 <div class="col-lg-10" id="listCards">
-                    <ul class="list-group">
+                    <ul class="list-group" data-bind="forech: cards">
                         <li class="list-group-item">
                             <h4 class="list-group-item-heading">What does lol mean?</h4>
                             <p class="list-group-item-text">Laughing Out Loud</p>
                         </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">What does rofl mean?</h4>
-                            <p class="list-group-item-text">Rolling on Floor Laughing </p>
-                        </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">Say a other Word for Hi!</h4>
-                            <p class="list-group-item-text">Hey</p>
-                        </li>
                     </ul>
                 </div>
-                <script type="application/javascript">
-                    $('#listCards li').removeClass('active').click(function()
-                    {
-                        $('#listCards li').removeClass('active');
-                        $(this).addClass('active');
-                    });
-                </script>
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
                         <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Card</button>
@@ -67,8 +52,8 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
-                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+                        <button type="button" class="btn btn-danger" id="buttonCancel"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
+                        <button type="button" class="btn btn-success" id="buttonSave"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
                     </div>
                 </div>
             </div>
@@ -81,13 +66,34 @@
     {
         this.onLoad = function()
         {
+            viewmodal = $a.data.getDeckModel();
+            deckmodel = viewmodal.newDeck();
+            ko.applyBindings(deckmodel,document.getElementById("main_view"));
+            $('#listCards li').removeClass('active').click(function(e)
+            {
+                data = ko.dataFor(e.target);
+                deckmodel.setSelectedCard(data);
+                $('#listCards li').removeClass('active');
+                $(this).addClass('active');
+            });
             $('#inputAdd').selectpicker();
-            $('#buttonAddCard').click(function(){$a.router.go("/deck/"+router.getVariable("deckid")+"/add/reviewcard")});
+            $('#buttonCancel').click(function(){
+                deckmodel = new Deck('','');
+                viewmodal.setNewDeck(deckmodel);
+                $a.router.go("/deck");
+            });
+            $('#buttonSave').click(function(){
+                viewmodal.decks().push(deckmodel);
+                deckmodel = new Deck('','');
+                viewmodal.setNewDeck(deckmodel);
+                $a.router.go("/deck");
+            });
+            $('#buttonAddCard').click(function(){$a.router.go("/deck/"+router.getVariable("deckid")+"/add/reviewcard")}); //TODO Other
         }
 
         this.onUnload = function()
         {
-
+            ko.unapplyBindings($('body'),false);
         }
     }
     $a.controller.set(new controller());

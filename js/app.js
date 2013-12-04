@@ -39,7 +39,6 @@ var App = (function () {
         };
 
         Router.prototype.getVariable = function (name){
-            alert(map.getValueString());
             return map.get(name);
         };
 
@@ -333,9 +332,129 @@ var App = (function () {
 
     App.prototype.logger = new Logger(true);
 
+    var Hasher = (function () {
+
+        function Hasher()
+        {
+
+        }
+
+        Hasher.prototype.getID = function(type)
+        {
+            var now = new Date();
+            return  'id'+CryptoJS.SHA3(type+"_hash_"+now.toGMTString()+"_"+Math.random(),{ outputLength: 256 });
+        };
+        return Hasher;
+    })();
+
+    App.prototype.hasher = new Hasher();
+
+    var Data = (function () {
+
+        var p_deckModel = null;
+
+        Data.prototype.supportsStorage = function()
+        {
+            try {
+                return 'localStorage' in window && window['localStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function Data()
+        {
+            p_deckModel = new ViewModelDecks();
+            if(!(localStorage.getItem("decks") === null))
+            {
+                deckModelObj=jQuery.parseJSON(localStorage.getItem('decks'));
+                this.mapDeckModal(deckModelObj,p_deckModel);
+            }
+        }
+
+        Data.prototype.save = function()
+        {
+            localStorage.setItem('decks',ko.toJSON(p_deckModel))
+        };
+
+        Data.prototype.getDeckModel = function()
+        {
+            return p_deckModel;
+        };
+
+        Data.prototype.saveDeckModel = function()
+        {
+            localStorage.setItem("decks", ko.toJSON(deckModel));
+        };
+
+        Data.prototype.mapDeckModal = function(jsObject,viewDeckModel)
+        {
+            viewDeckModel.mapObj(jsObject);
+        }
+
+        Data.prototype.getDeckByID = function(id)
+        {
+            for (var i = 0; i < p_deckModel.decks().length; ++i)
+            {
+                if (p_deckModel.decks()[i].deckID() == id)
+                {
+                    return p_deckModel.decks()[i];
+                }
+            }
+        };
+
+        Data.prototype.deleteByID = function(id)
+        {
+            for (var i = 0; i < p_deckModel.decks().length; ++i)
+            {
+                if (p_deckModel.decks()[i].deckID() == id)
+                {
+                    p_deckModel.decks.remove(p_deckModel.decks()[i]);
+                    return;
+                }
+            }
+        };
+
+
+        return Data;
+    })();
+
+    App.prototype.data = new Data();
+
     return App;
 })();
 
+//Dobbleclick Object
+var MyDBClick = (function () {
+
+    var ponclick,pondbclick,ptime,ptimer;
+
+    function MyDBClick(onclick,ondbclick,time) {
+        var intRegex = /^\d+$/;
+        ponclick = onclick;
+        pondbclick = ondbclick;
+        ptime = (intRegex.test(time))?time:250;
+    }
+
+    MyDBClick.prototype.click = function(e)
+    {
+        if (ptimer) clearTimeout(ptimer);
+        ptimer = setTimeout(function() {ponclick(e); }, ptime);
+    };
+
+    MyDBClick.prototype.dbclick = function(e)
+    {
+        clearTimeout(ptimer);
+        pondbclick(e);
+    };
+
+    MyDBClick.prototype.setObject = function (obj) {
+        obj.click(this.click);
+        obj.dblclick(this.dbclick)
+    };
+
+    return MyDBClick;
+})();
 
 //init
 $(function() {
@@ -353,6 +472,9 @@ $(function() {
     $a.router.add("/deck/:deckid:/edit/reviewcard/:cardid:", "pages/cards/review_edit.html","Edit Review Card");
     $a.router.add("/deck/:deckid:/add/reviewcard", "pages/cards/review_create.html","New Review Card");
     $a.router.add("/deck/:deckid:/edit", "pages/edit_deck.html", "Edit Deck");
-    $a.router.add("/deck/:studyid:", "pages/view_deck.html", "Deck");
+    $a.router.add("/deck/:deckid:", "pages/view_deck.html", "Deck");
     $a.hashchange.execute();
+});
+$( window ).unload(function() {
+    $a.data.save();
 });

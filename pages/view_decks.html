@@ -16,24 +16,12 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Decks</label>
                 <div class="col-lg-10" id="listDecks">
-                    <ul class="list-group">
+                    <ul class="list-group" data-bind="foreach: decks">
                         <li class="list-group-item">
-                            <h4 class="list-group-item-heading">Softwareengineering</h4>
-                            <span class="badge">4</span>
-                            <p class="list-group-item-text">Alles rund um Software Kees </p>
-                            <p><span class="label label-success">Informatik</span></p>
-                        </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">Mathematik</h4>
-                            <span class="badge">33</span>
-                            <p class="list-group-item-text">Mathematik Semester 3 </p>
-                            <p><span class="label label-primary">Mathematik</span></p>
-                        </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">Datenbanken</h4>
-                            <span class="badge">11</span>
-                            <p class="list-group-item-text">Semester 3+4 Datenbanken</p>
-                            <p><span class="label label-success">Informatik</span></p>
+                            <h4 class="list-group-item-heading" data-bind="text: title">Softwareengineering</h4>
+                            <span class="badge" data-bind="text: count">4</span>
+                            <p class="list-group-item-text" data-bind="text: desciption">Alles rund um Software Kees </p>
+                            <p data-bind="foreach: labels"><span class="label label-success" data-bind="attr: { class: labelClass()}, text:name"></span>&nbsp;</p>
                         </li>
                     </ul>
                     <span class="help-block hidden-xs">View Deck by clicking on the Deck, doubleclicking to select on.</span>
@@ -64,55 +52,66 @@
 
         var edit = function()
         {
-            $a.router.go("/deck/1aZ/edit");
+            var id = viewmodal.getSectedID();
+            setTimeout(function(){$a.router.go("/deck/"+id+"/edit");},200);
         };
 
         var remove = function()
         {
+            var deck = viewmodal.selectedDeck();
+            viewmodal.decks.remove(deck);
             $a.messages.info('Deck has been deleted','Deleted',function(){});
         };
 
         this.onLoad = function()
         {
+            // Static //
             $('#buttonNew').click(function()
             {
                 $a.router.go('/deck/new');
             });
-            $("#buttonEdit").click(this.edit);
-            $("#buttonRemove").click(this.remove);
+            // ViewModal //
+            viewmodal = $a.data.getDeckModel();
+            ko.applyBindings(viewmodal,document.getElementById("main_view"));
+            // Dynamic //
+            $("#buttonEdit").click(edit);
+            $("#buttonRemove").click(remove);
             $("#listDecks").hammer();
-            var f = function(ev) {
+            $("#listDecks li").on("hold",function(ev) {
                 ev.gesture.preventDefault();
                 switch(ev.type) {
                     case 'hold':
+                        data = ko.dataFor(ev.target);
                         arr = Array();
                         arr[0] = $a.menu.createEntry('edit',edit);
                         arr[1] = $a.menu.createEntry('delete',remove);
                         $a.menu.show(arr);
                         break;
                 }
-            }
-            $("#listDecks li").on("hold",f);
+            });
             dbc = new MyDBClick(
-                    function()
+                    function(e)
                     {
-                        $a.router.go("/deck/1aZ");
-                    },function(e){
+                        data = ko.dataFor(e.target);
+                        viewmodal.setSelectedDeck(data);
+                        $a.router.go("/deck/"+viewmodal.getSectedID());
+                    },
+                    function(e){
+                        data = ko.dataFor(e.target);
+                        viewmodal.setSelectedDeck(data);
                         $("#listDecks li").removeClass('active');
                         $(e.target).closest("#listDecks li").addClass('active').end().children().blur().end().focus();
                         if (window.getSelection)
                             window.getSelection().removeAllRanges();
                         else if (document.selection)
                             document.selection.empty();
-                    },300);
-            dbc.setObject($("#listDecks li"));
+                    },300).setObject($("#listDecks li"));
         }
 
         this.onUnload = function()
         {
-
+            ko.unapplyBindings($('body'),false);
         }
-
     }
     $a.controller.set(new controller());
 </script>
