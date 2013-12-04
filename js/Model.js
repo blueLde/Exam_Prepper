@@ -41,19 +41,14 @@ var ReviewCard = function() {
 
 ReviewCard.inheritsFrom(Card);
 
-var ViewModel = function(cards) {
+ function ViewModel(cards) {
 
-	this.cards =
+	this.cards = 
+	ko.observableArray();
 
-	ko.observableArray(cards.map(function
-
-	(cards) {
-		return new
-
-		card();
-	}));
-
-
+	this.name = "ein Name";
+	
+	// add a single card
 	this.add = function() {
 		var current = this.current().trim();
 		if (current) {
@@ -62,11 +57,15 @@ var ViewModel = function(cards) {
 		}
 	}.bind(this); 
 	
-	// remove a single todo
+	// remove a single card
 	this.remove = function(Card) {
 		this.Cards.remove(Card);
 	}.bind(this);
 
 }
 
-ko.applyBindings(ViewModel);
+
+
+
+
+ko.applyBindings(new ViewModel(new Card()));
