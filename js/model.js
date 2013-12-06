@@ -77,6 +77,43 @@ var ReviewCard = function(question,answer) {
     }
 };
 
+function Study() {
+	var self = this;
+
+	self.studyID = ko.observable('-1');
+	self.title = ko.observable('Please Enter Name');
+	self.studytype = ko.observable('none');
+	var labels = ko.observableArray();
+	myObservableArray.push('none');
+	var dirty = {
+		state : ko.observable(false)
+	};
+	this.cardProgress = 
+		ko.observableArray();
+	
+}
+
+var StudyPerDay = function() {
+	this.cardsToStudyReamaining = ko.obervable('-1');
+	this.studiedLastTime = ko.obervable('01.01.1980');
+	this.numberOfCards = ko.obervable('-1');
+};
+StudyPerDay.inheritsFrom(Study);
+
+
+var StudyPerDay = function() {
+	this.layer = ko.obervable('-1');
+	this.cardID = ko.obervable('01.01.1980');
+	this.deckID= ko.obervable('-1');
+	this.numberStudied= ko.obervable('-1');
+};
+
+
+
+
+
+
+
 var ViewModelDecks = function() {
     var self = this;
     self.decks = ko.observableArray();
