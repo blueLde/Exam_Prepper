@@ -22,32 +22,16 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Cards</label>
                 <div class="col-lg-10" id="listCards">
-                    <ul class="list-group" data-bind="forech: cards">
+                    <ul class="list-group" data-bind="foreach: cards">
                         <li class="list-group-item">
-                            <h4 class="list-group-item-heading">What does lol mean?</h4>
-                            <p class="list-group-item-text">Laughing Out Loud</p>
-                        </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">What does rofl mean?</h4>
-                            <p class="list-group-item-text">Rolling on Floor Laughing </p>
-                        </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">Say a other Word for Hi!</h4>
-                            <p class="list-group-item-text">Hey</p>
+                            <h4 class="list-group-item-heading" data-bind="text: question">What does lol mean?</h4>
                         </li>
                     </ul>
                 </div>
-                <script type="application/javascript">
-                    $('#listCards li').removeClass('active').click(function()
-                    {
-                        $('#listCards li').removeClass('active');
-                        $(this).addClass('active');
-                    });
-                </script>
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Card</button>
-                        <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit Card</button>
+                        <button type="button" class="btn btn-sm btn-danger" id="buttonRemoveCard"><span class="glyphicon glyphicon-minus"></span> Remove Card</button>
+                        <button type="button" class="btn btn-sm btn-warning" id="buttonEditCard"><span class="glyphicon glyphicon-pencil"></span> Edit Card</button>
                     </div>
                 </div>
             </div>
@@ -60,7 +44,7 @@
                         <option value="multi">Multiple Choice Card</option>
                     </select>
                     <span class="help-block">The type of the card which will be added.</span>
-                    <button type="button" class="btn btn-sm btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Add Card</button>
+                    <button type="button" class="btn btn-sm btn-success pull-right" id="buttonAddCard"><span class="glyphicon glyphicon-plus"></span> Add Card</button>
                 </div>
             </div>
             <hr>
@@ -82,9 +66,17 @@
         this.onLoad = function()
         {
             viewmodal = $a.data.getDeckModel();
-            deckmodelOriginal = $a.data.getDeckByID($a.router.getVariable("deckid"));
-            deckmodel = new Deck('','');
-            deckmodel.mapObj(ko.toJS(deckmodelOriginal));
+            if(viewmodal.editDeck().deckID() != $a.router.getVariable("deckid"))
+            {
+                deckmodelOriginal = $a.data.getDeckByID($a.router.getVariable("deckid"));
+                deckmodel = new Deck('','');
+                deckmodel.mapObj(ko.toJS(deckmodelOriginal));
+            }
+            else
+            {
+                deckmodel = viewmodal.editDeck();
+            }
+            viewmodal.editDeck(deckmodel);
             ko.applyBindings(deckmodel,document.getElementById("main_view"));
             $('#listCards li').removeClass('active').click(function(e)
             {
@@ -102,12 +94,16 @@
                 viewmodal.decks().push(deckmodel);
                 $a.router.go("/deck");
             });
-            $('#buttonAddCard').click(function(){$a.router.go("/deck/"+router.getVariable("deckid")+"/add/reviewcard")}); //TODO Other
-        }
+            $('#buttonRemoveCard').click(function(){
+                deckmodel.cards.remove(deckmodel.selectedCard());
+            });
+            $('#buttonEditCard').click(function(){$a.router.go("/deck/edit/edit/reviewcard/"+deckmodel.selectedCard().cardID())});
+            $('#buttonAddCard').click(function(){$a.router.go("/deck/edit/add/reviewcard")}); //TODO Other       }
 
-        this.onUnload = function()
-        {
-            ko.unapplyBindings($('body'),false);
+            this.onUnload = function()
+            {
+                ko.unapplyBindings($('body'),false);
+            }
         }
     }
     $a.controller.set(new controller());

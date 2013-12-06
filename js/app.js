@@ -365,7 +365,7 @@ var App = (function () {
         function Data()
         {
             p_deckModel = new ViewModelDecks();
-            if(!(localStorage.getItem("decks") === null))
+            if(!(localStorage.getItem("decks") == null))
             {
                 deckModelObj=jQuery.parseJSON(localStorage.getItem('decks'));
                 this.mapDeckModal(deckModelObj,p_deckModel);

@@ -1,96 +1,6 @@
-Function.prototype.inheritsFrom = function( parentClassOrObject ){
-    if ( parentClassOrObject.constructor == Function )
-    {
-        //Normal Inheritance
-        this.prototype = new parentClassOrObject;
-        this.prototype.constructor = this;
-        this.prototype.parent = parentClassOrObject.prototype;
-    }
-    else
-    {
-        //Pure Virtual Inheritance
-        this.prototype = parentClassOrObject;
-        this.prototype.constructor = this;
-        this.prototype.parent = parentClassOrObject;
-    }
-    return this;
-}
-
-function Deck() {
-	var self = this;
-
-	self.deckID = ko.observable('-1');
-	self.title = ko.observable('Please Enter Name');
-	self.desciption = ko.observable('Descibe your deck here...');
-	var labels = ko.observableArray();
-	myObservableArray.push('none');
-	var dirty = {
-		state : ko.observable(false)
-	};
-}
-
-var Card = function(title, completed) {
-	this.cardID = ko.observable('1');
-	this.question = ko.observable('Please Enter A Question');
-	this.cardType = ko.observable('none');
-};
-
-var ReviewCard = function() {
-	this.answer = ko.obervable('Please enter your answer here');
-};
-
-ReviewCard.inheritsFrom(Card);
-
- function ViewModel(cards) {
-
-	this.cards = 
-	ko.observableArray();
-
-	this.name = "ein Name";
-	
-	// add a single card
-	this.add = function() {
-		var current = this.current().trim();
-		if (current) {
-			this.cards.push(new Card(current));
-			this.current('');
-		}
-	}.bind(this); 
-	
-	// remove a single card
-	this.remove = function(Card) {
-		this.Cards.remove(Card);
-	}.bind(this);
-
-}
-
-
-
-
-
-ko.applyBindings(new ViewModel(new Card()));
-=======
-Function.prototype.inheritsFrom = function( parentClassOrObject ){
-    if ( parentClassOrObject.constructor == Function )
-    {
-        //Normal Inheritance
-        this.prototype = new parentClassOrObject;
-        this.prototype.constructor = this;
-        this.prototype.parent = parentClassOrObject.prototype;
-    }
-    else
-    {
-        //Pure Virtual Inheritance
-        this.prototype = parentClassOrObject;
-        this.prototype.constructor = this;
-        this.prototype.parent = parentClassOrObject;
-    }
-    return this;
-}
-
 function Deck(title,desciption) {
     var self = this;
-    self.deckID = ko.observable(Math.round(Math.random()*100));
+    self.deckID = ko.observable("1");
     self.title = ko.observable(title);
     self.desciption = ko.observable(desciption);
     self.count = ko.observable(0);
@@ -108,6 +18,8 @@ function Deck(title,desciption) {
     }
     self.mapObj = function(jsObj)
     {
+        self.title(jsObj.title);
+        self.desciption(jsObj.desciption);
         self.deckID(jsObj.deckID);
         self.count(jsObj.count);
         self.edit = jsObj.edit;
@@ -118,12 +30,12 @@ function Deck(title,desciption) {
             labelModel = new Label(label.name,label.color);
             self.labels().push(labelModel);
         }
-        cards = deck.cards;
+        cards = jsObj.cards;
         for (var o = 0; o < cards.length; ++o)
         {
             card = cards[o];
-            cardModel = new Card(card.question);
-            cardModel.cardID = card.cardID;
+            cardModel = new window[card.type](card.question);
+            cardModel.mapObj(card);
             self.cards().push(cardModel);
         }
     }
@@ -143,15 +55,27 @@ var Card = function(question) {
     var self = this;
     self.cardID = ko.observable('1');
     self.question = ko.observable(question);
+    self.type = ko.observable("ReviewCard");
+    self.mapObj = function(obj)
+    {
+        self.question(obj.question);
+        self.cardID(obj.cardID);
+        self.type(obj.type);
+    }
 };
 
 var ReviewCard = function(question,answer) {
     var self = this;
-    ko.utils.extend(self, new ItemModel(question));
-    self.answer = ko.obervable(answer);
+    ko.utils.extend(self, new Card(question));
+    self.answer = ko.observable(answer);
+    self.mapObj = function(obj)
+    {
+        self.question(obj.question);
+        self.cardID(obj.cardID);
+        self.type(obj.type);
+        self.answer(obj.answer);
+    }
 };
-
-ReviewCard.inheritsFrom(Card);
 
 var ViewModelDecks = function() {
     var self = this;

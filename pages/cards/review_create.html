@@ -6,7 +6,7 @@
             <div class="form-group">
                 <label for="inputQuestion" class="col-lg-2 control-label">Question</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputQuestion" placeholder="Titel">
+                    <input type="text" class="form-control" id="inputQuestion" placeholder="Titel" data-bind="value: question">
                     <span class="help-block">The Question</span>
                 </div>
             </div>
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="inputAnswer" class="col-lg-2 control-label">Answer</label>
                 <div class="col-lg-10">
-                    <textarea class="form-control" rows="6" id="inputAnswer"></textarea>
+                    <textarea class="form-control" rows="6" id="inputAnswer" data-bind="value: answer"></textarea>
                     <span class="help-block">The Answer of the Question.</span>
                     <script type="application/javascript">
                         $('#inputAnswer').wysihtml5({
@@ -34,8 +34,8 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
-                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+                        <button type="button" class="btn btn-danger" id="buttonCancel"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
+                        <button type="button" class="btn btn-success" id="buttonSave"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
                     </div>
                 </div>
             </div>
@@ -43,3 +43,34 @@
         <!-- content bis hier -->
     </div><!--/span-->
 </div><!--/row-->
+<script>
+    var controller = function()
+    {
+        this.onLoad = function()
+        {
+            id = $a.router.getVariable("deckid");
+            viewmodal = $a.data.getDeckModel();
+            reviewcard = new ReviewCard('','');
+			reviewcard.cardID($a.hasher.getID('card'));
+            ko.applyBindings(reviewcard,document.getElementById("main_view"));
+            $('#buttonCancel').click(function(){window.back();});
+            $('#buttonSave').click(function(){
+                if(id == 'new')
+                {
+                    viewmodal.newDeck().cards().push(reviewcard);
+                }
+                else if(id == 'edit')
+                {
+                    viewmodal.editDeck().cards().push(reviewcard);
+                }
+                window.back();
+            });
+        }
+
+        this.onUnload = function()
+        {
+            ko.unapplyBindings($('body'),false);
+        }
+    }
+    $a.controller.set(new controller());
+</script>

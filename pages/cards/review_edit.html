@@ -1,68 +1,32 @@
 <div class="row row-offcanvas row-offcanvas-right">
     <!-- content von hier -->
     <div class="col-md-12">
-        <h2>New Reviewcard</h2>
+        <h2>Edit Reviewcard</h2>
         <form class="form-horizontal" role="form">
             <div class="form-group">
-                <label for="inputTitel" class="col-lg-2 control-label">Titel</label>
+                <label for="inputQuestion" class="col-lg-2 control-label">Question</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputTitel" placeholder="Titel" readonly>
-                    <span class="help-block">The Title of the Deck.</span>
+                    <input type="text" class="form-control" id="inputQuestion" placeholder="Titel" data-bind="value: question">
+                    <span class="help-block">The Question</span>
                 </div>
             </div>
             <hr>
             <div class="form-group">
-                <label for="inputDescription" class="col-lg-2 control-label">Description</label>
+                <label for="inputAnswer" class="col-lg-2 control-label">Answer</label>
                 <div class="col-lg-10">
-                    <input type="text" class="form-control" id="inputDescription" placeholder="Description">
-                    <span class="help-block">The Description of the Deck.</span>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label class="col-lg-2 control-label">Cards</label>
-                <div class="col-lg-10" id="listCards">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">What does lol mean?</h4>
-                            <p class="list-group-item-text">Laughing Out Loud</p>
-                        </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">What does rofl mean?</h4>
-                            <p class="list-group-item-text">Rolling on Floor Laughing </p>
-                        </li>
-                        <li class="list-group-item">
-                            <h4 class="list-group-item-heading">Say a other Word for Hi!</h4>
-                            <p class="list-group-item-text">Hey</p>
-                        </li>
-                    </ul>
-                </div>
-                <script type="application/javascript">
-                    $('#listCards li').removeClass('active').click(function()
-                    {
-                        $('#listCards li').removeClass('active');
-                        $(this).addClass('active');
-                    });
-                </script>
-                <div class="col-lg-offset-2 col-lg-10">
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Card</button>
-                        <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit Card</button>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="inputAdd" class="col-lg-2 control-label">Add Card</label>
-                <div class="col-lg-10">
-                    <select id="inputAdd" class="form-control" >
-                        <option value="review" selected>Review Card</option>
-                        <option value="multi">Multiple Choice Card</option>
-                    </select>
-                    <span class="help-block">The type of the card which will be added.</span>
-                    <button type="button" class="btn btn-sm btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Add Card</button>
-                    <script type="text/javascript">
-                        $('#inputAdd').selectpicker();
+                    <textarea class="form-control" rows="6" id="inputAnswer" data-bind="value: answer"></textarea>
+                    <span class="help-block">The Answer of the Question.</span>
+                    <script type="application/javascript">
+                        $('#inputAnswer').wysihtml5({
+                            "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+                            "emphasis": true, //Italics, bold, etc. Default true
+                            "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                            "html": false, //Button which allows you to edit the generated HTML. Default false
+                            "link": true, //Button to insert a link. Default true
+                            "image": false, //Button to insert an image. Default true,
+                            "color": false, //Button to change color of font
+                            "size": 'sm'
+                        });
                     </script>
                 </div>
             </div>
@@ -70,8 +34,8 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
-                        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
+                        <button type="button" class="btn btn-danger" id="buttonCancel"><span class="glyphicon glyphicon-trash"></span> Cancel</button>
+                        <button type="button" class="btn btn-success" id="buttonSave"><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
                     </div>
                 </div>
             </div>
@@ -79,3 +43,54 @@
         <!-- content bis hier -->
     </div><!--/span-->
 </div><!--/row-->
+<script>
+    var controller = function()
+    {
+        this.onLoad = function()
+        {
+            id = $a.router.getVariable("deckid");
+            cardid = $a.router.getVariable("cardid");
+            viewmodal = $a.data.getDeckModel();
+            if(id == 'new')
+            {
+                deck = viewmodal.newDeck();
+            }
+            else if(id == 'edit')
+            {
+                deck = viewmodal.editDeck();
+            }
+            originalReviewcard = new ReviewCard('','');
+            for (var o = 0; o < deck.cards().length; ++o)
+            {
+                if (deck.cards()[o].cardID() == cardid)
+                {
+                    originalReviewcard = deck.cards()[o];
+                    break;
+                }
+            }
+            reviewcard = new ReviewCard('','');
+            reviewcard.mapObj(ko.toJS(originalReviewcard));
+            ko.applyBindings(reviewcard,document.getElementById("main_view"));
+            $('#buttonCancel').click(function(){window.back();});
+            $('#buttonSave').click(function(){
+                if(id == 'new')
+                {
+                    viewmodal.newDeck().cards.remove(originalReviewcard);
+                    viewmodal.newDeck().cards.push(reviewcard);
+                }
+                else if(id == 'edit')
+                {
+                    viewmodal.editDeck().cards.remove(originalReviewcard);
+                    viewmodal.editDeck().cards.push(reviewcard);
+                }
+                window.back();
+            });
+        }
+
+        this.onUnload = function()
+        {
+            ko.unapplyBindings($('body'),false);
+        }
+    }
+    $a.controller.set(new controller());
+</script>

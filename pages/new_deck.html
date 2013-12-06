@@ -22,17 +22,16 @@
             <div class="form-group">
                 <label class="col-lg-2 control-label">Cards</label>
                 <div class="col-lg-10" id="listCards">
-                    <ul class="list-group" data-bind="forech: cards">
+                    <ul class="list-group" data-bind="foreach: cards">
                         <li class="list-group-item">
-                            <h4 class="list-group-item-heading">What does lol mean?</h4>
-                            <p class="list-group-item-text">Laughing Out Loud</p>
+                            <h4 class="list-group-item-heading" data-bind="text: question">What does lol mean?</h4>
                         </li>
                     </ul>
                 </div>
                 <div class="col-lg-offset-2 col-lg-10">
                     <div class="pull-right">
-                        <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Card</button>
-                        <button type="button" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-pencil"></span> Edit Card</button>
+                        <button type="button" class="btn btn-sm btn-danger" id="buttonRemoveCard"><span class="glyphicon glyphicon-minus"></span> Remove Card</button>
+                        <button type="button" class="btn btn-sm btn-warning"id="buttonEditCard"><span class="glyphicon glyphicon-pencil"></span> Edit Card</button>
                     </div>
                 </div>
             </div>
@@ -68,6 +67,7 @@
         {
             viewmodal = $a.data.getDeckModel();
             deckmodel = viewmodal.newDeck();
+            deckmodel.deckID($a.hasher.getID('deck'));
             ko.applyBindings(deckmodel,document.getElementById("main_view"));
             $('#listCards li').removeClass('active').click(function(e)
             {
@@ -79,16 +79,22 @@
             $('#inputAdd').selectpicker();
             $('#buttonCancel').click(function(){
                 deckmodel = new Deck('','');
+				deckmodel.deckID($a.hasher.getID('deck'));
                 viewmodal.setNewDeck(deckmodel);
                 $a.router.go("/deck");
             });
             $('#buttonSave').click(function(){
                 viewmodal.decks().push(deckmodel);
                 deckmodel = new Deck('','');
+				deckmodel.deckID($a.hasher.getID('deck'));
                 viewmodal.setNewDeck(deckmodel);
                 $a.router.go("/deck");
             });
-            $('#buttonAddCard').click(function(){$a.router.go("/deck/"+router.getVariable("deckid")+"/add/reviewcard")}); //TODO Other
+            $('#buttonRemoveCard').click(function(){
+                deckmodel.cards.remove(deckmodel.selectedCard());
+            });
+            $('#buttonEditCard').click(function(){$a.router.go("/deck/new/edit/reviewcard/"+deckmodel.selectedCard().cardID())});
+            $('#buttonAddCard').click(function(){$a.router.go("/deck/new/add/reviewcard")}); //TODO Other
         }
 
         this.onUnload = function()
