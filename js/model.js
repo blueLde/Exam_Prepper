@@ -1,4 +1,4 @@
-///Deck/////
+///Deck Models////
 function Deck(title,desciption) {
     var self = this;
     self.deckID = ko.observable("1");
