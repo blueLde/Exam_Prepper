@@ -352,6 +352,7 @@ var App = (function () {
     var Data = (function () {
 
         var p_deckModel = null;
+        var p_studyModel = null;
 
         Data.prototype.supportsStorage = function()
         {
@@ -365,16 +366,23 @@ var App = (function () {
         function Data()
         {
             p_deckModel = new ViewModelDecks();
+            p_studyModel = new ViewModelStudy();
             if(!(localStorage.getItem("decks") == null))
             {
                 deckModelObj=jQuery.parseJSON(localStorage.getItem('decks'));
                 this.mapDeckModal(deckModelObj,p_deckModel);
+            }
+            if(!(localStorage.getItem("studies") == null))
+            {
+                deckStudylObj=jQuery.parseJSON(localStorage.getItem('studies'));
+                this.mapStudyModal(deckStudylObj,p_studyModel);
             }
         }
 
         Data.prototype.save = function()
         {
             localStorage.setItem('decks',ko.toJSON(p_deckModel))
+            localStorage.setItem('studies',ko.toJSON(p_studyModel))
         };
 
         Data.prototype.getDeckModel = function()
@@ -382,14 +390,19 @@ var App = (function () {
             return p_deckModel;
         };
 
-        Data.prototype.saveDeckModel = function()
+        Data.prototype.getStudyModel = function()
         {
-            localStorage.setItem("decks", ko.toJSON(deckModel));
+            return p_studyModel;
         };
 
         Data.prototype.mapDeckModal = function(jsObject,viewDeckModel)
         {
             viewDeckModel.mapObj(jsObject);
+        }
+
+        Data.prototype.mapStudyModal = function(jsObject,viewStudyModel)
+        {
+            viewStudyModel.mapObj(jsObject);
         }
 
         Data.prototype.getDeckByID = function(id)
@@ -403,7 +416,19 @@ var App = (function () {
             }
         };
 
-        Data.prototype.deleteByID = function(id)
+        Data.prototype.getStudyByID = function(id)
+        {
+            console.log(ko.toJS(p_studyModel));
+            for (var i = 0; i < p_studyModel.studies().length; ++i)
+            {
+                if (p_studyModel.studies()[i].studyID() == id)
+                {
+                    return p_studyModel.studies()[i];
+                }
+            }
+        };
+
+        Data.prototype.deleteDeckByID = function(id)
         {
             for (var i = 0; i < p_deckModel.decks().length; ++i)
             {
@@ -415,6 +440,17 @@ var App = (function () {
             }
         };
 
+        Data.prototype.deleteStudyByID = function(id)
+        {
+            for (var i = 0; i < p_studyModel.studies().length; ++i)
+            {
+                if (p_studyModel.studies()[i].studyID() == id)
+                {
+                    p_studyModel.studies.remove(p_studyModel.studies()[i]);
+                    return;
+                }
+            }
+        };
 
         return Data;
     })();

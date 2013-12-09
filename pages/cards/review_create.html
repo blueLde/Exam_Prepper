@@ -17,7 +17,7 @@
                     <textarea class="form-control" rows="6" id="inputAnswer" data-bind="value: answer"></textarea>
                     <span class="help-block">The Answer of the Question.</span>
                     <script type="application/javascript">
-                        $('#inputAnswer').wysihtml5({
+                       /* $('#inputAnswer').wysihtml5({
                             "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
                             "emphasis": true, //Italics, bold, etc. Default true
                             "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
@@ -26,7 +26,7 @@
                             "image": false, //Button to insert an image. Default true,
                             "color": false, //Button to change color of font
                             "size": 'sm'
-                        });
+                        });*/
                     </script>
                 </div>
             </div>
@@ -57,11 +57,11 @@
             $('#buttonSave').click(function(){
                 if(id == 'new')
                 {
-                    viewmodal.newDeck().cards().push(reviewcard);
+                    viewmodal.newDeck().cards.push(reviewcard);
                 }
                 else if(id == 'edit')
                 {
-                    viewmodal.editDeck().cards().push(reviewcard);
+                    viewmodal.editDeck().cards.push(reviewcard);
                 }
                 window.back();
             });

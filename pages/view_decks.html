@@ -19,7 +19,7 @@
                     <ul class="list-group" data-bind="foreach: decks">
                         <li class="list-group-item">
                             <h4 class="list-group-item-heading" data-bind="text: title">Softwareengineering</h4>
-                            <span class="badge" data-bind="text: count">4</span>
+                            <span class="badge" data-bind="text: cards().length">4</span>
                             <p class="list-group-item-text" data-bind="text: desciption">Alles rund um Software Kees </p>
                             <p data-bind="foreach: labels"><span class="label label-success" data-bind="attr: { class: labelClass()}, text:name"></span>&nbsp;</p>
                         </li>
@@ -81,7 +81,8 @@
                 ev.gesture.preventDefault();
                 switch(ev.type) {
                     case 'hold':
-                        data = ko.dataFor(ev.target);
+                        data = ko.dataFor(ev.delegateTarget);
+                        viewmodal.setSelectedDeck(data);
                         arr = Array();
                         arr[0] = $a.menu.createEntry('edit',edit);
                         arr[1] = $a.menu.createEntry('delete',remove);

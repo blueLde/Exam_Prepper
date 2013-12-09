@@ -25,6 +25,7 @@
                     <ul class="list-group" data-bind="foreach: cards">
                         <li class="list-group-item">
                             <h4 class="list-group-item-heading" data-bind="text: question">What does lol mean?</h4>
+                            <p class="list-group-item-text" data-bind="text: display">Laughing Out Loud</p>
                         </li>
                     </ul>
                 </div>
@@ -90,8 +91,8 @@
                 $a.router.go("/deck");
             });
             $('#buttonEdit').click(function(){
-                $a.data.deleteByID($a.router.getVariable("deckid"));
-                viewmodal.decks().push(deckmodel);
+                $a.data.deleteDeckByID($a.router.getVariable("deckid"));
+                viewmodal.decks.push(deckmodel);
                 $a.router.go("/deck");
             });
             $('#buttonRemoveCard').click(function(){

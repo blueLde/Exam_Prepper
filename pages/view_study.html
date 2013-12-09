@@ -2,7 +2,7 @@
     <!-- content von hier -->
     <div class="col-md-12">
         <h2>Study Softwareengineering</h2>
-        <nav class="navbar navbar-default" role="navigation">
+        <nav class="navbar navbar-default" role="navigation" style="display: none">
             <div class="btn-group" style="margin: 8px;">
                 <button type="button" class="btn btn-default">prev</button>
                 <button type="button" class="btn btn-default">next</button>
@@ -13,23 +13,17 @@
         <div id="card" class="navbar navbar-default" style="padding: 15px">
             <div id="question">
                 <h4>Question</h4>
-                <p>
-                    Nennen sie drei Begrüßungen.
+                <p data-bind="text: question">
                 </p>
                 <button type="button" class="btn btn-primary pull-right" id="buttonShowAnswer"><span class="glyphicon glyphicon-eye-open"></span> Show Answer</button>
             </div>
             <div id="answer" style="display: none">
                 <h4>Answer</h4>
-                <p>
-                <ul>
-                    <li>Hallo</li>
-                    <li>Hi</li>
-                    <li>Hey</li>
-                </ul>
+                <p data-bind="text: answer">
                 </p>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Wrong</button>
-                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Correct</button>
+                    <button type="button" class="btn btn-danger" id="buttonWrong"><span class="glyphicon glyphicon-remove-sign"></span> Wrong</button>
+                    <button type="button" class="btn btn-success" id="buttonRight"><span class="glyphicon glyphicon-ok-sign"></span> Correct</button>
                 </div>
             </div>
         </div>
@@ -45,12 +39,27 @@
                 $('#question').css("display","none");
                 $('#answer').css("display","block");
             });
+
+            studymodel = $a.data.getStudyByID($a.router.getVariable("studyid"));
+            deckRandom = Math.round((studymodel.decks().length-1) * Math.random());
+            deck = studymodel.decks()[deckRandom];
+            cardRandom = Math.round((deck.cards().length-1) * Math.random());
+            card = deck.cards()[cardRandom];
+            ko.applyBindings(card,document.getElementById("card"));
+
+            $('#buttonWrong').click(function(){
+                location.reload();
+            });
+            $('#buttonRight').click(function(){
+                location.reload();
+            });
         }
 
         this.onUnload = function()
         {
-
+            ko.unapplyBindings($('body'),false);
         }
     }
     $a.controller.set(new controller());
+</script>
 </script>

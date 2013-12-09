@@ -25,6 +25,7 @@
                     <ul class="list-group" data-bind="foreach: cards">
                         <li class="list-group-item">
                             <h4 class="list-group-item-heading" data-bind="text: question">What does lol mean?</h4>
+                            <p class="list-group-item-text" data-bind="text: display">Laughing Out Loud</p>
                         </li>
                     </ul>
                 </div>
@@ -84,7 +85,8 @@
                 $a.router.go("/deck");
             });
             $('#buttonSave').click(function(){
-                viewmodal.decks().push(deckmodel);
+                deckmodel.labels.push(new Label('platzhalter','success'))
+                viewmodal.decks.push(deckmodel);
                 deckmodel = new Deck('','');
 				deckmodel.deckID($a.hasher.getID('deck'));
                 viewmodal.setNewDeck(deckmodel);
