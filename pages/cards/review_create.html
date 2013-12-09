@@ -44,6 +44,11 @@
     </div><!--/span-->
 </div><!--/row-->
 <script>
+    function goBack(evt) {
+        history.go(-1);
+        return false;
+    }
+
     var controller = function()
     {
         this.onLoad = function()
@@ -53,7 +58,7 @@
             reviewcard = new ReviewCard('','');
 			reviewcard.cardID($a.hasher.getID('card'));
             ko.applyBindings(reviewcard,document.getElementById("main_view"));
-            $('#buttonCancel').click(function(){window.back();});
+            $('#buttonCancel').click(function(){goBack();});
             $('#buttonSave').click(function(){
                 if(id == 'new')
                 {
@@ -63,7 +68,7 @@
                 {
                     viewmodal.editDeck().cards.push(reviewcard);
                 }
-                window.back();
+                goBack();
             });
         }
 
