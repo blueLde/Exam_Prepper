@@ -2,3 +2,5 @@
 cucumber/
 log.txt
 *.bat
+*.exe
+*.jar

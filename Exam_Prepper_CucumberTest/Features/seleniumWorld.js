@@ -1,19 +1,21 @@
-<<<<<<< Updated upstream
 var SeleniumWorld = function(callback)
 {
     // Irgendwas machen, wenn die Welt läuft
+    callback();
 };
 
-var webdriver = require('selenium-webdriver'), SeleniumServer = require('selenium-webdriver/remote').SeleniumServer;
+var webdriver = require('./../wd');
 
-var server = new SeleniumServer('selenium-server.jar',
-{
-    port : 8080
+var browser = webdriver.remote('localhost', 4444);
+
+browser.init({browserName:'firefox'}, function() {
+  browser.get('http://rosesthen00b.github.io/Exam_Prepper/#/deck', function() {
+       browser.elementById('buttonNew').click();
+       browser.quit();
+  });
 });
 
-server.start();
 
-var driver = new webdriver.Builder().usingServer(server.address()).withCapabilities(webdriver.Capabilities.firefox()).build();
 
 // Die Test-Funktionen
 
@@ -37,27 +39,27 @@ SeleniumWorld.prototype.clickLoginButton = function(callback)
 
 SeleniumWorld.prototype.checkUserData = function(callback)
 {
-    callback();
+    callback.fail();
 };
 
 SeleniumWorld.prototype.checkCookie = function(callback)
 {
-    callback();  
+    callback.fail();  
 };
 
 SeleniumWorld.prototype.checkIfLoginSuccessful = function(loginSuccessful, callback)
 {
-    callback();  
+    callback.fail();  
 };
 
 SeleniumWorld.prototype.checkIfLoginSuccessfulMessage = function(callback)
 {
-    callback();  
+    callback.fail();  
 };
 
 SeleniumWorld.prototype,checkIfLoginFailedMessage = function(callback)
 {
-    callback();  
+    callback.fail();  
 };
 /*
  * ENDE Login testen
@@ -66,92 +68,99 @@ SeleniumWorld.prototype,checkIfLoginFailedMessage = function(callback)
 /*
  * Deck CRUD testen
  */
-Selenium.prototype.enterDeckTitle = function(callback)
+SeleniumWorld.prototype.enterDeckTitle = function(callback)
+{
+	/*browser.init({browserName:'firefox'}, function() {
+	  browser.get('http://rosesthen00b.github.io/Exam_Prepper/#/deck', function() {
+	       //browser.elementById('buttonNew').click();	       
+	       browser.quit();
+	       callback();  
+	  });
+	});*/ callback();
+    
+};
+
+SeleniumWorld.prototype.enterDeckDescription = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.enterDeckDescription = function(callback)
+SeleniumWorld.prototype.addCardsToDeck = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.addCardsToDeck = function(callback)
+SeleniumWorld.prototype.saveDeck = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.saveDeck = function(callback)
+SeleniumWorld.prototype.checkIfDeckSaved = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfDeckSaved = function(callback)
+SeleniumWorld.prototype.synchronizeDeckWithServer = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.synchronizeDeckWithServer = function(callback)
+SeleniumWorld.prototype.enterDeckSearchQuery = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.enterDeckSearchQuery = function(callback)
+SeleniumWorld.prototype.searchDeck = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.searchDeck = function(callback)
+SeleniumWorld.prototype.checkIfFoundDecksShown = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfFoundDecksShown = function(callback)
+SeleniumWorld.prototype.selectDeckFromSearchResults = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.selectDeckFromSearchResults = function(callback)
+SeleniumWorld.prototype.checkIfDeckIsSelected = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfDeckIsSelected = function(callback)
+SeleniumWorld.prototype.clickEditDeck = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.clickEditDeck = function(callback)
+SeleniumWorld.prototype.checkIfDeckOpened = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfDeckOpened = function(callback)
+SeleniumWorld.prototype.updateDeckInfos = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.updateDeckInfos = function(callback)
+SeleniumWorld.prototype.removeDeck = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.removeDeck = function(callback)
+SeleniumWorld.prototype.checkIfDeckIsDeleted = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfDeckIsDeleted = function(callback)
+SeleniumWorld.prototype.tellServerToDeleteDeck = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.tellServerToDeleteDeck = function(callback)
-{
-    callback();  
-};
-
-Selenium.prototype.checkIfServerDeletedDeck = function(callback)
+SeleniumWorld.prototype.checkIfServerDeletedDeck = function(callback)
 {
     callback();  
 };
@@ -162,42 +171,42 @@ Selenium.prototype.checkIfServerDeletedDeck = function(callback)
 /*
  * Create Review Card testen
  */
-Selenium.prototype.checkIfCardTemplateExists = function(callback)
+SeleniumWorld.prototype.checkIfCardTemplateExists = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.enterQuestionToCard = function(callback)
+SeleniumWorld.prototype.enterQuestionToCard = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.enterAnswerToCard = function(callback)
+SeleniumWorld.prototype.enterAnswerToCard = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.addCard = function(callback)
+SeleniumWorld.prototype.addCard = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfCardSaved = function(callback)
+SeleniumWorld.prototype.checkIfCardSaved = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.addCardToDeck = function(callback)
+SeleniumWorld.prototype.addCardToDeck = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.cancelCardCreation = function(callback)
+SeleniumWorld.prototype.cancelCardCreation = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfCardDiscarded = function(callback)
+SeleniumWorld.prototype.checkIfCardDiscarded = function(callback)
 {
     callback();  
 };
@@ -208,82 +217,82 @@ Selenium.prototype.checkIfCardDiscarded = function(callback)
 /*
  * Study CRUD testen
  */
-Selenium.prototype.enterStudyTitle = function(callback)
+SeleniumWorld.prototype.enterStudyTitle = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.addDeckToStudy = function(callback)
+SeleniumWorld.prototype.addDeckToStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.saveStudy = function(callback)
+SeleniumWorld.prototype.saveStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfStudyIsSaved = function(callback)
+SeleniumWorld.prototype.checkIfStudyIsSaved = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.synchronizeStudyWithServer = function(callback)
+SeleniumWorld.prototype.synchronizeStudyWithServer = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.selectStudy = function(callback)
+SeleniumWorld.prototype.selectStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.clickEditStudy = function(callback)
+SeleniumWorld.prototype.clickEditStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfStudyIsOpened = function(callback)
+SeleniumWorld.prototype.checkIfStudyIsOpened = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.readStudy = function(callback)
+SeleniumWorld.prototype.readStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfStudyIsSelected = function(callback)
+SeleniumWorld.prototype.checkIfStudyIsSelected = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.clickEditStudy = function(callback)
+SeleniumWorld.prototype.clickEditStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.updateStudy = function(callback)
+SeleniumWorld.prototype.updateStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.removeStudy = function(callback)
+SeleniumWorld.prototype.removeStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfStudyIsDeleted = function(callback)
+SeleniumWorld.prototype.checkIfStudyIsDeleted = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.tellServerToDeleteStudy = function(callback)
+SeleniumWorld.prototype.tellServerToDeleteStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfServerDeletedStudy = function(callback)
+SeleniumWorld.prototype.checkIfServerDeletedStudy = function(callback)
 {
     callback();  
 };
@@ -294,92 +303,44 @@ Selenium.prototype.checkIfServerDeletedStudy = function(callback)
 /*
  * Study Deck testen
  */
-Selenium.prototype.clickStudy = function(callback)
+SeleniumWorld.prototype.checkIfDeckIsSelectedForStudy = function(callback)
+{
+	callback();	
+};
+
+SeleniumWorld.prototype.clickStudy = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfCardsAvaiable = function(callback)
+SeleniumWorld.prototype.checkIfCardsAvaiable = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfCardIsShown = function(callback)
+SeleniumWorld.prototype.checkIfCardIsShown = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.answerCard = function(callback)
+SeleniumWorld.prototype.answerCard = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfCardsAvaiable = function(callback)
+SeleniumWorld.prototype.checkIfCardsAvaiable = function(cardAvaiable, callback)
 {
     callback();  
 };
 
-Selenium.prototype.checkIfProgressSaved = function(callback)
+SeleniumWorld.prototype.checkIfProgressSaved = function(callback)
 {
     callback();  
 };
 
-Selenium.prototype.synchronizeDeckWithServer = function(callback)
+SeleniumWorld.prototype.synchronizeDeckWithServer = function(callback)
 {
-    callback();  
+	callback();
 };
-
-driver.quit();
-
-// Testen, ob Java danach auch tatsächlich beendet worden ist
-server.stop();
 
 exports.World = SeleniumWorld; 
-=======
-var SeleniumWorld = function(callback)
-{
-    // Irgendwas machen, wenn die Welt läuft
-};
-
-var webdriver = require('selenium-webdriver'),
-    SeleniumServer = require('selenium-webdriver/remote').SeleniumServer;
-
-var server = new SeleniumServer('selenium-server.jar', {
-  port: 8080
-});
-
-server.start();
-
-var driver = new webdriver.Builder().
-    usingServer(server.address()).
-    withCapabilities(webdriver.Capabilities.firefox()).
-    build();
-
-// Die Test-Funktionen
-SeleniumWorld.prototype.enterUsername = function(callback)
-{
-    callback();
-};
-
-SeleniumWorld.prototype.enterPW = function(callback)
-{
-    callback();
-};
-
-SeleniumWorld.prototype.clickLoginButton = function(callback)
-{
-    callback();
-};
-
-SeleniumWorld.prototype.checkUserData = function(callback)
-{
-    callback();
-};
-
-driver.quit();
-
-// Testen, ob Java danach auch tatsächlich beendet worden ist
-server.stop();
-
-exports.World = SeleniumWorld;
->>>>>>> Stashed changes

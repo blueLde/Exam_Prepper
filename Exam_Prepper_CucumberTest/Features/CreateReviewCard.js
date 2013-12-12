@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 module.exports = function()
 {
     this.Given(/^card template$/, function(callback)
@@ -28,7 +27,7 @@ module.exports = function()
 
     this.Then(/^add to the deck$/, function(callback)
     {
-        this.addCardToDeck(caallback);
+        this.addCardToDeck(callback);
     });
 
     this.When(/^hit the button 'cancel'$/, function(callback)
@@ -42,42 +41,3 @@ module.exports = function()
     });
 
 }; 
-=======
-module.exports = function()
-{
-	this.Given(/^card template$/, function(callback) {
-	  // express the regexp above with the code you wish you had
-	  callback.pending();
-	});
-
-	this.When(/^user enters question$/, function(callback) {
-	  // express the regexp above with the code you wish you had
-	  callback.pending();
-	});
-
-	this.When(/^user enters answer$/, function(callback) {
-	  // express the regexp above with the code you wish you had
-	  callback.pending();
-	});
-
-	this.When(/^hit the button 'add card'$/, function(callback) {
-	  // express the regexp above with the code you wish you had
-	  callback.pending();
-	});
-
-	this.Then(/^the card will be saved$/, function(callback) {
-	  // express the regexp above with the code you wish you had
-	  callback.pending();
-	});
-
-	this.Then(/^add to the deck$/, function(callback) {
-	  // express the regexp above with the code you wish you had
-	  callback.pending();
-	});
-
-	this.When(/^hit the button 'cancel'$/, function(callback) {
-	  // express the regexp above with the code you wish you had
-	  callback.pending();
-	});
-};
->>>>>>> Stashed changes
