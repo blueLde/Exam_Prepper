@@ -5,7 +5,11 @@
 	 "dependencies":
 	 {
 	 	"express":"4.x",
-	 	"morgan":"*"
+	 	"morgan":"*",
+	 	"cookie-parser":"*",
+	 	"express-session":"*",
+	 	"body-parser":"*",
+	 	"nedb":"*"
 	 }
 	
 }

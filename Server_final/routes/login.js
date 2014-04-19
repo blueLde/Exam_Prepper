@@ -3,7 +3,14 @@ var login= express.Router();
 
 login.get('/', function(req, res)
 {
-	res.send('moin');
+	res.sendfile('test_html/login.html');
+});
+
+login.post('/', function(req, res)
+{
+	console.log('Username: ' + req.param('username'));
+	console.log('Password: ' + req.param('password'));
+	res.redirect('/');
 });
 
 module.exports.login = login;
