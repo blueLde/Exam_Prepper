@@ -7,8 +7,6 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
 	session = require('express-session'),
-	Datastore = require('nedb'),
-	db = new Datastore({ filename: './db/data.nedb', autoload: true }),
     app = express();
 
 // Logger with 'short' output, see here: http://www.senchalabs.org/connect/logger.html
@@ -23,19 +21,6 @@ app.use(session({ secret: 'EXAMPREPPER-session cookie is signed with this secret
 // removes "powered-by express" in Response-Header
 app.disable('x-powered-by');
 
-
-// Database-Tests
-// db.insert([{ a: 5, b:6 }, { a: 42, b:43 }]);
-// db.find({a:{$gt: 41}}, function(err, results)
-// {
-	// console.log(results.length);
-	// results.forEach(function(entry)
-	// {
-		// console.log(entry.a);
-		// console.log(entry.b);
-	// });
-// });
-
 // route definitions
 app.get('/', function(req, res)
 {
@@ -44,6 +29,7 @@ app.get('/', function(req, res)
 
 app.use('/login', require('./routes/login.js').login);
 app.use('/secret', require('./routes/secret.js').secret);
+app.use('/register', require('./routes/register.js').register);
 
 // If no route is found -> 404
 app.get('*', function(req, res)
@@ -52,3 +38,4 @@ app.get('*', function(req, res)
 });
  
 app.listen(8080);
+console.log('Server is running...');

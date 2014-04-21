@@ -1,19 +1,18 @@
 var express = require('express');
-var login= express.Router();
+var register= express.Router();
 var db = require('../db');
 var user = {};
 
-login.get('/', function(req, res)
+register.get('/', function(req, res)
 {
-	res.sendfile('test_html/login.html');
+	res.sendfile('test_html/register.html');
 });
 
-login.post('/', function(req, res)
+register.post('/', function(req, res)
 {
-	
 	console.log('Username: ' + req.param('username'));
 	console.log('Password: ' + req.param('password'));
 	res.redirect('/');
 });
 
-module.exports.login = login;
+module.exports.register = register;
