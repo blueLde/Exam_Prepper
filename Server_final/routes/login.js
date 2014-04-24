@@ -1,6 +1,6 @@
 var express = require('express');
 var login= express.Router();
-var db = require('../db');
+var db = require('../db').db;
 var user = {};
 
 login.get('/', function(req, res)
@@ -11,8 +11,20 @@ login.get('/', function(req, res)
 login.post('/', function(req, res)
 {
 	
-	console.log('Username: ' + req.param('username'));
-	console.log('Password: ' + req.param('password'));
+	user.name = req.param('username');
+	user.pw = req.param('password');
+	
+	// returns null, if not found
+	db.user.findOne({name:user.name}, function(err, doc)
+	{
+		console.log(doc);
+	});
+	
+	req.session.regenerate(function(err)
+	{
+		user.sid = req.sessionID;
+	});
+		
 	res.redirect('/');
 });
 
