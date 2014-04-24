@@ -5,7 +5,19 @@ var user = {};
 
 register.get('/', function(req, res)
 {
-	res.sendfile('test_html/register.html');
+	// returns null, if not found
+	db.user.findOne({sessions: {$in: [req.sessionID]}}, function(err, doc)
+	{
+		// If doc not null and pw is the same
+		if(doc)
+		{
+			res.redirect('/#AlreadyLoggedIn_LogoutBeforeRegister');
+		}
+		else
+		{
+			res.sendfile('test_html/register.html');
+		}
+	});
 });
 
 register.post('/', function(req, res)
@@ -19,11 +31,11 @@ register.post('/', function(req, res)
 		if(docs.length == 0)
 		{
 			db.user.insert(user);
-			res.redirect('/');
+			res.redirect('/#RegisterWasOK');
 		}
 		else
 		{
-			res.redirect('/register');
+			res.redirect('/register#UserExistsAlready');
 		}
 	});
 });

@@ -28,6 +28,7 @@ app.get('/', function(req, res)
 });
 
 app.use('/login', require('./routes/login.js').login);
+app.use('/logout', require('./routes/logout.js').logout);
 app.use('/secret', require('./routes/secret.js').secret);
 app.use('/register', require('./routes/register.js').register);
 

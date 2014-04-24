@@ -5,7 +5,20 @@ var user = {};
 
 login.get('/', function(req, res)
 {
-	res.sendfile('test_html/login.html');
+	// returns null, if not found
+	db.user.findOne({sessions: {$in: [req.sessionID]}}, function(err, doc)
+	{
+		// If doc not null and pw is the same
+		if(doc)
+		{
+			res.redirect('/#AlreadyLoggedIn');
+		}
+		else
+		{
+			res.sendfile('test_html/login.html');
+		}
+	});
+	
 });
 
 login.post('/', function(req, res)
@@ -17,15 +30,28 @@ login.post('/', function(req, res)
 	// returns null, if not found
 	db.user.findOne({name:user.name}, function(err, doc)
 	{
-		console.log(doc);
+		// If doc not null and pw is the same
+		if(doc && doc.pw == user.pw)
+		{
+			req.session.regenerate(function(err)
+			{
+				user.sid = req.sessionID;
+				
+				user.id = doc._id;
+				
+				db.user.update({_id:user.id}, {$push:{sessions:user.sid}}, {}, function()
+				{
+					// redirect after updating session
+					res.redirect('/#LoginWasOK');
+				});
+			});
+			
+		}
+		else
+		{
+			res.redirect('/login#WrongUserOrPassword');
+		}
 	});
-	
-	req.session.regenerate(function(err)
-	{
-		user.sid = req.sessionID;
-	});
-		
-	res.redirect('/');
 });
 
 module.exports.login = login;
